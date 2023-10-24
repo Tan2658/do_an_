@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33927.289
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "..\..\gitRepos\khamBenh\GUI\GUI.csproj", "{49C0E288-0EA1-4952-BAFD-0A4264AD7F42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUS", "..\..\gitRepos\khamBenh\BUS\BUS.csproj", "{FE97B72A-77A2-432B-99BB-59F0BA658119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\..\gitRepos\khamBenh\DAL\DAL.csproj", "{1E79753B-7A87-4B77-BF99-5FE54DC09B8A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49C0E288-0EA1-4952-BAFD-0A4264AD7F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C0E288-0EA1-4952-BAFD-0A4264AD7F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C0E288-0EA1-4952-BAFD-0A4264AD7F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C0E288-0EA1-4952-BAFD-0A4264AD7F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE97B72A-77A2-432B-99BB-59F0BA658119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE97B72A-77A2-432B-99BB-59F0BA658119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE97B72A-77A2-432B-99BB-59F0BA658119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE97B72A-77A2-432B-99BB-59F0BA658119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E79753B-7A87-4B77-BF99-5FE54DC09B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E79753B-7A87-4B77-BF99-5FE54DC09B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E79753B-7A87-4B77-BF99-5FE54DC09B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E79753B-7A87-4B77-BF99-5FE54DC09B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
