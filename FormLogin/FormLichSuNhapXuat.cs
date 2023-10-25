@@ -66,7 +66,7 @@ namespace FormLogin
         {
             for (int i = 0; i < dgvVatTuInput.Rows.Count; i++)
             {
-                if (cboFind.SelectedItem.ToString() == dgvVatTuInput.Rows[i].Cells[3].Value.ToString())
+                if (cboFind.SelectedItem.ToString() == dgvVatTuInput.Rows[i].Cells[0].Value.ToString())
                 {
                     dgvVatTuInput.Rows[i].Visible = true;
                 }

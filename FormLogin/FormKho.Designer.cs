@@ -133,8 +133,8 @@
             // 
             this.cboFind.FormattingEnabled = true;
             this.cboFind.Items.AddRange(new object[] {
-            "Nhập ",
-            "Xuất"});
+            "Thuốc ",
+            "VTYT"});
             this.cboFind.Location = new System.Drawing.Point(431, 95);
             this.cboFind.Name = "cboFind";
             this.cboFind.Size = new System.Drawing.Size(151, 24);

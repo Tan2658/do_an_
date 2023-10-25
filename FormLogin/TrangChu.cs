@@ -828,7 +828,7 @@ namespace FormLogin
             dtpMonth.Format = DateTimePickerFormat.Custom;
             dtpYear.CustomFormat = "yyyy";
             dtpYear.Format = DateTimePickerFormat.Custom;
-            dtpQuy.CustomFormat = "MM/yyyy";
+            dtpQuy.CustomFormat = "yyyy";
             dtpQuy.Format = DateTimePickerFormat.Custom;
             List<LichSuNhapXuat> listStatic = context.LichSuNhapXuats.ToList();
             BindGridTK(listStatic);
