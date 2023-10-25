@@ -14,5 +14,12 @@ namespace BUS
             DentalContextDB context = new DentalContextDB();
             return context.DieuTri.Where(q => q.IDKham == id).ToList();
         }
+
+        public void Add(DieuTri dt)
+        {
+            DentalContextDB context = new DentalContextDB();
+            context.DieuTri.Add(dt);
+            context.SaveChanges();
+        }
     }
 }

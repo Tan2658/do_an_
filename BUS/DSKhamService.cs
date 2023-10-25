@@ -15,10 +15,16 @@ namespace BUS
             return context.DanhSachKham.ToList();
         }
 
-        public List<DanhSachKham> GetAllWithID(String ID)
+        public List<DanhSachKham> GetAllWithID(string ID)
         {
             DentalContextDB context = new DentalContextDB();
             return context.DanhSachKham.Where(q => q.IDBenhNhan == ID).ToList();
+        }
+
+        public DanhSachKham TimTheoIDKham(string ID)
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.DanhSachKham.FirstOrDefault(q => q.IDKham == ID);
         }
 
         public void Add(DanhSachKham ds)
@@ -44,6 +50,16 @@ namespace BUS
                 else
                     flag = -1;
             } while (flag != -1);
+        }
+
+        public void UpdateMaNV(string manv, string id)
+        {
+            DentalContextDB context = new DentalContextDB();
+
+            DanhSachKham ds = context.DanhSachKham.FirstOrDefault(q => q.IDKham == id);
+
+            ds.MaNV = manv;
+            context.SaveChanges();
         }
     }
 }

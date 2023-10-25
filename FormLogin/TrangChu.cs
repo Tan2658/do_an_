@@ -26,7 +26,9 @@ namespace FormLogin
         private readonly DSKhamService dskham = new DSKhamService();
         private readonly DieuTriService dieutri = new DieuTriService();
         private readonly DichVuService dichvu = new DichVuService();
-
+        private readonly CanLamSangService canlamsang = new CanLamSangService();
+        private readonly KhoService kho = new KhoService();
+        private readonly LichSuService lichsu = new LichSuService();
 
         public FormTrangChu()
         {
@@ -193,6 +195,9 @@ namespace FormLogin
         {
             try
             {
+                if (txtSearch.Text == "")
+                    throw new Exception("Vui lòng nhập đủ thông tin");
+
                 BacSi bs = nguoidung.findByName(txtSearch.Text);
                 dgvNguoiDung.Rows.Clear();
                 int index = dgvNguoiDung.Rows.Add();
@@ -613,7 +618,42 @@ namespace FormLogin
 
         private void dgvBenhNhanKham_SelectionChanged(object sender, EventArgs e)
         {
+            if (dgvBenhNhanKham.SelectedRows[0].Cells[0].Value != null)
+            {
+                if (dgvBenhNhanKham.SelectedRows[0].Cells[3].Value.ToString() == "0")
+                    btnTaoDieuTri.Enabled = true;
+                else
+                    btnTaoDieuTri.Enabled = false;
 
+                DanhSachKham ds = dskham.TimTheoIDKham(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
+                if (ds.MaNV != null)
+                    cmbBacSi.SelectedValue = ds.MaNV;
+
+                CanLamSang cls = canlamsang.GetWithIDKham(ds.IDKham);
+                if (cls != null)
+                {
+                    txtHuyetAp.Text = cls.HuyetAp.ToString();
+                    txtMach.Text = cls.Mach.ToString();
+                    txtBaoHanh.Text = cls.BaoHanh;
+                    txtKhac.Text = cls.Khac;
+                    txtDuong.Text = cls.DuongHuyet;
+
+                    if (cls.MauKhoDong == true)
+                        rdoMauTS.Checked = true;
+                    else
+                        rdoMauTC.Checked = true;
+
+                    if (cls.BenhTim == true)
+                        rdoTimCo.Checked = true;
+                    else
+                        rdoTimKhong.Checked = true;
+
+                    if (cls.ThieuNang == true)
+                        rdoTNangCo.Checked = true;
+                    else
+                        rdoTNangKhong.Checked = true;
+                }
+            }
         }
 
         private void BindGridDieuTri()
@@ -637,6 +677,89 @@ namespace FormLogin
         private void btnTaoDieuTri_Click(object sender, EventArgs e)
         {
             BindGridDieuTri();
+        }
+
+        private void btnLuuInfoKham_Click(object sender, EventArgs e)
+        {
+            string idkham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+
+            dskham.UpdateMaNV(cmbBacSi.SelectedValue.ToString(), idkham);
+
+            CanLamSang cls = new CanLamSang()
+            {
+                IDKham = idkham,
+                BaoHanh = txtBaoHanh.Text,
+                BenhTim = rdoTimCo.Checked,
+                DuongHuyet = txtDuong.Text,
+                HuyetAp = int.Parse(txtHuyetAp.Text),
+                Khac = txtKhac.Text,
+                Mach = int.Parse(txtMach.Text),
+                MauKhoDong = rdoMauTS.Checked,
+                ThieuNang = rdoTNangCo.Checked
+            };
+
+            canlamsang.AddUpdate(cls);
+
+            for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
+            {
+                if (int.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString()) > 0)
+                {
+                    DieuTri dt = new DieuTri()
+                    {
+                        IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                        IDDichVu = dgvDieuTri.Rows[i].Cells[0].Value.ToString(),
+                        IDDungCu = "DC01",
+                        SoLuong = int.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString()),
+                        ThanhTien = int.Parse(dgvDieuTri.Rows[i].Cells[5].Value.ToString())
+                    };
+                    dieutri.Add(dt);
+
+                    kho.TruDungCu(int.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString()), "DC01");
+
+                    Kho kh = kho.FindByIDDungCu("DC01");
+
+                    LichSuNhapXuat ls = new LichSuNhapXuat()
+                    {
+                        NoiDung = false,
+                        IDDungCu = kh.IDDungCu,
+                        TenDungCu = kh.TenDungCu,
+                        Loai = kh.Loai,
+                        DonViTinh = kh.DonViTinh,
+                        SoLuongNhapXuat = dt.SoLuong,
+                        Don = kh.ThiTruong.DonGia,
+                        ThanhTien = dt.SoLuong * kh.ThiTruong.DonGia,
+                        NgayNhap = dskham.TimTheoIDKham(idkham).NgayKham
+                    };
+
+                    lichsu.AddEntry(ls);
+                }
+            }
+        }
+
+        private void dgvDieuTri_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                float sum = 0;
+
+                for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
+                {
+                    if (dgvDieuTri.Rows[i].Cells[5].Value != null)
+                    {
+                        dgvDieuTri.Rows[i].Cells[5].Value =
+                            (float.Parse(dgvDieuTri.Rows[i].Cells[3].Value.ToString())
+                            * float.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString())).ToString();
+
+                        sum += float.Parse(dgvDieuTri.Rows[i].Cells[5].Value.ToString());
+                    }
+                }
+
+                txtTongDieuTri.Text = sum.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
