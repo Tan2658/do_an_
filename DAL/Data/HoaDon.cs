@@ -15,33 +15,23 @@ namespace DAL.Data
 
         [Required]
         [StringLength(3)]
-        public string IDBenhNhan { get; set; }
+        public string IDKham { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string HoTen { get; set; }
-
-        public bool? Gioi { get; set; }
-
-        [Required]
-        [StringLength(4)]
-        public string NamSinh { get; set; }
-
-        [Required]
-        [StringLength(11)]
-        public string SDT { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string DiaChi { get; set; }
-
-        [Required]
         [StringLength(255)]
         public string PhuongThucThanhToan { get; set; }
 
         [Column(TypeName = "money")]
+        public decimal TienThuoc { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal TienDieuTri { get; set; }
+
+        [Column(TypeName = "money")]
         public decimal TongTien { get; set; }
 
-        public virtual BenhNhan BenhNhan { get; set; }
+        [Column(TypeName = "money")]
+        public decimal NgayLap { get; set; }
+
+        public virtual DanhSachKham DanhSachKham { get; set; }
     }
 }

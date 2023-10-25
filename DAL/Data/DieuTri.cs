@@ -17,11 +17,11 @@ namespace DAL.Data
         [Key]
         [Column(Order = 1)]
         [StringLength(3)]
-        public string IDBenhNhan { get; set; }
+        public string IDKham { get; set; }
 
         [Key]
         [Column(Order = 2)]
-        [StringLength(3)]
+        [StringLength(4)]
         public string IDDungCu { get; set; }
 
         [Key]
@@ -33,10 +33,10 @@ namespace DAL.Data
         [Column(Order = 4, TypeName = "money")]
         public decimal ThanhTien { get; set; }
 
-        public virtual BenhNhan BenhNhan { get; set; }
+        public virtual DanhSachKham DanhSachKham { get; set; }
 
         public virtual DichVu DichVu { get; set; }
 
-        public virtual DungCuNhaKhoa DungCuNhaKhoa { get; set; }
+        public virtual Kho Kho { get; set; }
     }
 }

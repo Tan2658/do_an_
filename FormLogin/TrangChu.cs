@@ -23,9 +23,7 @@ namespace FormLogin
         private readonly NguoiDungService nguoidung = new NguoiDungService();
         private readonly TaiKhoanService taikhoan = new TaiKhoanService();
         private readonly BenhNhanService benhnhan  = new BenhNhanService();
-        ReportDataSource rp = new ReportDataSource();
-        DentalContextDB db1 = new DentalContextDB();
-        DentalContextDB db = new DentalContextDB();
+        private readonly BenhNhanDangKiService dangki = new BenhNhanDangKiService();
         public FormTrangChu()
         {
             InitializeComponent();
@@ -47,8 +45,8 @@ namespace FormLogin
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             dateTimePicker2.Format = DateTimePickerFormat.Custom;
             dateTimePicker2.CustomFormat = "dd/MM/yyyy";
-            dateTimePicker3.Format = DateTimePickerFormat.Custom;
-            dateTimePicker3.CustomFormat = "dd/MM/yyyy";
+            dtNgayKhamDau.Format = DateTimePickerFormat.Custom;
+            dtNgayKhamDau.CustomFormat = "dd/MM/yyyy";
             lblDuocVatTu.Hide();
             lblNguoiDung.Hide();
             lblKhamBenh.Hide();
@@ -117,35 +115,22 @@ namespace FormLogin
         {
            
         }
-        private void FillRegistered(List<BacSi> list)
+
+        
+        private void FillMember(List<BacSi> list)
         {
-            //dgvNguoiDung.Rows.Clear();
-            //foreach (var item in list)
-            //{
-            //    int index = dgvNguoiDung.Rows.Add();
-            //    dgvNguoiDung.Rows[index].Cells[0].Value = item.TrangThai;
-            //    dgvNguoiDung.Rows[index].Cells[1].Value = item.Ten;
-            //    dgvNguoiDung.Rows[index].Cells[2].Value = item.STD;
-            //    dgvNguoiDung.Rows[index].Cells[3].Value = item.TenDangNhap;
-            //    dgvNguoiDung.Rows[index].Cells[4].Value = item.MatKhau;
-            //    dgvNguoiDung.Rows[index].Cells[5].Value = item.KinhNghiem;
-            //    dgvNguoiDung.Rows[index].Cells[6].Value = item.Mota;
-            //}
-        }
-        private void FillRegister(List<BacSi> list)
-        {
-            //dgvDangKi.Rows.Clear();
-            //foreach (var item in list)
-            //{
-            //    int index = dgvDangKi.Rows.Add();
-            //    dgvDangKi.Rows[index].Cells[0].Value = item.TrangThai;
-            //    dgvDangKi.Rows[index].Cells[1].Value = item.Ten;
-            //    dgvDangKi.Rows[index].Cells[2].Value = item.STD;
-            //    dgvDangKi.Rows[index].Cells[3].Value = item.TenDangNhap;
-            //    dgvDangKi.Rows[index].Cells[4].Value = item.MatKhau;
-            //    dgvDangKi.Rows[index].Cells[5].Value = item.KinhNghiem;
-            //    dgvDangKi.Rows[index].Cells[6].Value = item.Mota;
-            //}
+            dgvNhaKhoa.Rows.Clear();
+            foreach (var item in list)
+            {
+                int index = dgvNhaKhoa.Rows.Add();
+                dgvNhaKhoa.Rows[index].Cells[0].Value = item.MaNV;
+                dgvNhaKhoa.Rows[index].Cells[1].Value = item.Ten;
+                dgvNhaKhoa.Rows[index].Cells[2].Value = item.TaiKhoan.TenDangNhap;
+                dgvNhaKhoa.Rows[index].Cells[3].Value = item.ChucVu;
+                dgvNhaKhoa.Rows[index].Cells[4].Value = item.SDT;
+                dgvNhaKhoa.Rows[index].Cells[5].Value = item.KinhNghiem;
+                dgvNhaKhoa.Rows[index].Cells[6].Value = item.MoTa;
+            }
         }
         private void FillBenhNhan(List<BenhNhan> list)
         {
@@ -175,151 +160,96 @@ namespace FormLogin
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    var listRegistered = nguoidung.GetRegisted();
-            //    var listRegister = nguoidung.GetRegister();
-            //    FillRegistered(listRegistered);
-            //    FillRegister(listRegister);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
-        private void btnSort_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    var listSortRegistered = nguoidung.SortRegisted();
-            //    var listSortRegister = nguoidung.SortRegister();
-            //    FillRegistered(listSortRegistered);
-            //    FillRegister(listSortRegister);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
-        private void dgvDangKi_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-         
-            string col = dgvDangKi.Columns[e.ColumnIndex].Name;
-            if(col == "col8")
+            try
             {
-                dgvNguoiDung.Rows.Add(dgvDangKi.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[2].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[3].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[4].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[5].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[6].Value.ToString());
-                dgvDangKi.Rows.RemoveAt(dgvDangKi.CurrentRow.Index);
-           
+                var listMember = nguoidung.GetAll();
+                FillMember(listMember);
+                MessageBox.Show("Tải thông tin thành viên phòng khám thành công");
+            }
+            catch (Exception ex)
+           {
+
+               MessageBox.Show(ex.Message);
             }
         }
-
-        private void dgvNguoiDung_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            // Kiểm tra chỉ định ô cần đặt màu nền
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
-            {
-                // Lấy giá trị của ô
-                var cellValue = dgvNguoiDung.Rows[e.RowIndex].Cells[0].Value;
-
-                // Kiểm tra giá trị và đặt màu nền cho ô
-                if (cellValue != null && cellValue.ToString() == "Sử dụng")
-                {
-                    e.CellStyle.BackColor = Color.Green; // Đặt màu nền là màu đỏ
-                }
-            }
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    if(radioDangKi.Checked)
-            //    {
-            //        BacSi bs = nguoidung.findByName(txtSearch.Text);
-            //        dgvDangKi.Rows.Clear();
-            //        int index = dgvDangKi.Rows.Add();
-            //        dgvDangKi.Rows[index].Cells[0].Value = bs.TrangThai.ToString();
-            //        dgvDangKi.Rows[index].Cells[1].Value = bs.Ten.ToString();
-            //        dgvDangKi.Rows[index].Cells[2].Value = bs.STD.ToString();
-            //        dgvDangKi.Rows[index].Cells[3].Value = bs.TenDangNhap.ToString();
-            //        dgvDangKi.Rows[index].Cells[4].Value = bs.MatKhau.ToString();
-            //        dgvDangKi.Rows[index].Cells[5].Value = bs.KinhNghiem.ToString();
-            //        dgvDangKi.Rows[index].Cells[6].Value = bs.Mota.ToString();
-            //    }
-            //    else
-            //    {
-            //        BacSi bs = nguoidung.findByName(txtSearch.Text);
-            //        dgvNguoiDung.Rows.Clear();
-            //        int index = dgvNguoiDung.Rows.Add();
-            //        dgvNguoiDung.Rows[index].Cells[0].Value = bs.TrangThai.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[1].Value = bs.Ten.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[2].Value = bs.STD.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[3].Value = bs.TenDangNhap.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[4].Value = bs.MatKhau.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[5].Value = bs.KinhNghiem.ToString();
-            //        dgvNguoiDung.Rows[index].Cells[6].Value = bs.Mota.ToString();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-        public int checkIDBenhNhan(string IDBN)
-        {
-            if (dgvBenhNhan.Rows.Count > 0)
+            try
             {
-                for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+                if (radioBacSi.Checked)
                 {
-                    if (dgvBenhNhan.Rows[i].Cells[0].Value.ToString() == IDBN)
+                    var listDoctor = nguoidung.GetAllDoctor();
+                    dgvNhaKhoa.Rows.Clear();
+                    foreach (var item in listDoctor)
                     {
-                        return 1;
+                        int index = dgvNhaKhoa.Rows.Add();
+                        dgvNhaKhoa.Rows[index].Cells[0].Value = item.MaNV;
+                        dgvNhaKhoa.Rows[index].Cells[1].Value = item.Ten;
+                        dgvNhaKhoa.Rows[index].Cells[2].Value = item.TaiKhoan.TenDangNhap;
+                        dgvNhaKhoa.Rows[index].Cells[3].Value = item.ChucVu;
+                        dgvNhaKhoa.Rows[index].Cells[4].Value = item.SDT;
+                        dgvNhaKhoa.Rows[index].Cells[5].Value = item.KinhNghiem;
+                        dgvNhaKhoa.Rows[index].Cells[6].Value = item.MoTa;
                     }
+                    MessageBox.Show("Tải thông tin bác sĩ thành công");
+                }
+                else
+                {
+                    var listStaff = nguoidung.GetAllStaff();
+                    dgvNhaKhoa.Rows.Clear();
+                    foreach (var item in listStaff)
+                    {
+                        int index = dgvNhaKhoa.Rows.Add();
+                        dgvNhaKhoa.Rows[index].Cells[0].Value = item.MaNV;
+                        dgvNhaKhoa.Rows[index].Cells[1].Value = item.Ten;
+                        dgvNhaKhoa.Rows[index].Cells[2].Value = item.TaiKhoan.TenDangNhap;
+                        dgvNhaKhoa.Rows[index].Cells[3].Value = item.ChucVu;
+                        dgvNhaKhoa.Rows[index].Cells[4].Value = item.SDT;
+                        dgvNhaKhoa.Rows[index].Cells[5].Value = item.KinhNghiem;
+                        dgvNhaKhoa.Rows[index].Cells[6].Value = item.MoTa;
+                    }
+                    MessageBox.Show("Tải thông tin nhân viên thành công");
                 }
             }
-            return -1;
-        }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void btnDel_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    string ID = txtIDBN.Text;
+            try
+            {
+                string name = txtNameBN.Text;
+                BenhNhan dbDelete = benhnhan.findNameBenhNhan(name);
+                if (dbDelete == null)
+                {
+                    throw new Exception("Không tìm thấy mã số sinh viên cần xóa");
+                }
+                else
+                {
+                    if (dbDelete != null)
+                    {
+                        DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
+                        if (dr == DialogResult.Yes)
+                        {
+                            dgvBenhNhan.Rows.RemoveAt(dgvBenhNhan.CurrentRow.Index); // Xóa ở DGV
+                            benhnhan.removeBenhNhan(name);
+                            clearContentBN();
+                            MessageBox.Show("Xóa sinh viên thành công", "Thông báo", MessageBoxButtons.OK);
+                        }
 
-            //    BenhNhan dbDelete = db1.BenhNhans.FirstOrDefault(p => p.IDBenhNhan == ID);
-            //    if (dbDelete == null)
-            //    {
-            //        throw new Exception("Không tìm thấy benh nhan cần xóa !");
-            //    }
-            //    else
-            //    {
-            //        if (dbDelete != null)
-            //        {
-            //            DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
-            //            if (dr == DialogResult.Yes)
-            //            {
-            //                dgvBenhNhan.Rows.RemoveAt(dgvBenhNhan.CurrentRow.Index); // Xóa ở DGV
-            //                db1.BenhNhans.Remove(dbDelete); // Xóa ở DB
-            //                db1.SaveChanges();
-            //                clearContentBN();
-            //                MessageBox.Show("Xóa sinh viên thành công", "Thông báo", MessageBoxButtons.OK);
-            //            }
-
-            //        }
+                    }
 
 
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+                }
+            }
+            catch (Exception ex)
+            {
 
-            //    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private string RemoveDiacritics(string text)
         {
@@ -366,30 +296,10 @@ namespace FormLogin
                         dgvBenhNhan.Rows[index].Cells[4].Value = item.SDT;
                         dgvBenhNhan.Rows[index].Cells[5].Value = item.DiaChi;
                     }
-                }
-                else if (txtNameBN.Text == "")
-                {
-                    BenhNhan IDBenhNhan = benhnhan.FindIDBenhNhan(txtIDBN.Text);
-                    dgvBenhNhan.Rows.Clear();
-                    int index = dgvBenhNhan.Rows.Add();
-                    dgvBenhNhan.Rows[index].Cells[0].Value = IDBenhNhan.IDBenhNhan;
-                    dgvBenhNhan.Rows[index].Cells[1].Value = IDBenhNhan.HoTen;
-                    if (IDBenhNhan.Gioi == false)
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
-
-                    }
-                    else
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
-                    }
-                    dgvBenhNhan.Rows[index].Cells[3].Value = IDBenhNhan.NamSinh;
-                    dgvBenhNhan.Rows[index].Cells[4].Value = IDBenhNhan.SDT;
-                    dgvBenhNhan.Rows[index].Cells[5].Value = IDBenhNhan.DiaChi;
-                }
+                }   
                 else
                 {
-                    for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+                    for (int i = 0; i < dgvBenhNhan.Rows.Count -1 ; i++)
                     {
                         string name = dgvBenhNhan.Rows[i].Cells[1].Value.ToString();
                         string findName = txtNameBN.Text;
@@ -412,60 +322,60 @@ namespace FormLogin
             catch (Exception ex)
             {
 
-                MessageBox.Show("Tìm thấy bệnh nhân thành công");
+                MessageBox.Show(ex.Message);
             }
         }
         private bool checkDataFields()
         {
-            if (txtIDBN.Text == "" || txtNameBN.Text == "" || txtNamSinhBN.Text == "" || txtSDTBN.Text == "" || txtGiaDinhBN.Text == "" || txtNgheNghiepBN.Text == ""  || txtTienSuBN.Text == "")
+            if (txtNameBN.Text == "" || txtNamSinhBN.Text == "" || txtSDTBN.Text == "" || txtLyDoBN.Text == "" || txtDiaChiBN.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu bệnh nhân đầy đủ", "Thong Bao", MessageBoxButtons.OK);
                 return false;
             }
-            else if (txtIDBN.Text.Length != 3)
+            else
             {
-                MessageBox.Show("ID Bệnh nhân chỉ có 3 ky tu", "Thong Bao", MessageBoxButtons.OK);
-                return false;
+                return true;
             }
-            return true;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
 
-            //try
-            //{
-            //    if (checkDataFields())
-            //    {
-            //        BenhNhan s =
-            //            new BenhNhan()
-            //            {
-            //                IDBenhNhan = txtIDBN.Text,
-            //                HoTen = txtNameBN.Text,
-            //                Gioi = radioMale.Checked ? true : false,
-            //                NamSinh = txtNamSinhBN.Text,    
-            //                SDT = txtSDTBN.Text,
-            //                DiaChi = txtDiaChiBN.Text,
-            //                LyDo = txtTienSuBN.Text,
-            //                NgayKhamDau = dateTimePicker3.Value
+            try
+            {
+                DateTime currentDateTime = DateTime.Now;
+                var listBenhNhan = benhnhan.GetAll();
+                foreach(var item in listBenhNhan)
+                {
+                    if(item.HoTen != txtNameBN.Text)
+                    {
+                        var number = radioMale.Checked ? 1 : 0;
+                        BenhNhan b = new BenhNhan() { 
+                            IDBenhNhan = "B"+dgvBenhNhan.Rows.Count.ToString(),
+                            HoTen = txtNameBN.Text,
+                            Gioi = radioMale.Checked ? true: false,
+                            NamSinh = txtNamSinhBN.Text,
+                            SDT = txtSDTBN.Text,
+                            DiaChi = txtDiaChiBN.Text,
+                            NgayKhamDau = dtNgayKhamDau.Value
+                        };
+                        benhnhan.InsertUpdate(b);
+                        clearContentBN();
+                        MessageBox.Show("Thêm bệnh nhân thành công");
+                        var listBenhNhanAdd = benhnhan.GetAll();
+                        FillBenhNhan(listBenhNhanAdd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có lẽ bạn đã có trong danh sách của chúng tôi");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
-
-                            
-                            
-            //            };
-            //        db1.BenhNhans.Add(s);
-            //        db1.SaveChanges();
-            //        clearContentBN();
-            //        MessageBox.Show("Thêm bệnh nhân thành công", "Thông báo", MessageBoxButtons.OK);
-            //        List<BenhNhan> listBN = db1.BenhNhans.ToList();
-            //        FillBenhNhan(listBN);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message);
-            //}
+               MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnLoadBN_Click(object sender, EventArgs e)
@@ -483,140 +393,100 @@ namespace FormLogin
         }
         private void clearContentBN()
         {
-            txtIDBN.Text = "";
-            txtNamSinhBN.Text = "";
-            txtSDTBN.Text = "";
-            txtGiaDinhBN.Text = "";
-            txtNameBN.Text = "";
-            txtNgheNghiepBN.Text = "";
-            txtTienSuBN.Text = "";
-        }
 
+            txtNameBN.Text = "";
+            txtNamSinhBN.Text = "";
+            txtLyDoBN.Text = "";
+            txtSDTBN.Text = "";
+            txtDiaChiBN.Text = "";
+        }
         private void dgvBenhNhan_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //try
-            //{
-            //    List<BenhNhan> listBN = db1.BenhNhans.ToList();
+            try
+            {
+                var listBenhNhan = benhnhan.GetAll();
 
-            //    if (dgvBenhNhan.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            //    {
-            //        dgvBenhNhan.CurrentRow.Selected = true;
-            //        txtIDBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells["Column1"].FormattedValue.ToString();
-            //        txtNameBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells["Column2"].FormattedValue.ToString();
-            //        if(dgvBenhNhan.Rows[e.RowIndex].Cells["Column3"].FormattedValue.ToString() == "Nam")
-            //        {
-            //            radioMale.Checked = true;
-            //        }
-            //        else
-            //        {
-            //            radioFemale.Checked = true;
-            //        }
-            //       txtNamSinhBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells["Column4"].FormattedValue.ToString();
-            //       txtSDTBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells["Column5"].FormattedValue.ToString();
-            //       txtDiaChiBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells["Column6"].FormattedValue.ToString();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+               if (dgvBenhNhan.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    dgvBenhNhan.CurrentRow.Selected = true;
+                    txtNameBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+                    if(dgvBenhNhan.Rows[e.RowIndex].Cells[2].FormattedValue.ToString() == "Nam")
+                    {
+                        radioMale.Checked = true;
+                    }
+                   else
+                   {
+                       radioFemale.Checked = true;
+                   }
+                  txtNamSinhBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
+                  txtSDTBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells[4].FormattedValue.ToString();
+                 txtDiaChiBN.Text = dgvBenhNhan.Rows[e.RowIndex].Cells[5].FormattedValue.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-       
-
         private void btnXoaTimKiem_Click(object sender, EventArgs e)
         {
             var listBN = benhnhan.GetAll();
             clearContentBN();
-            if(txtIDBN.Text == "")
+            if(txtNameBN.Text == "")
             {
                 FillBenhNhan(listBN);
             }
         }
         private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowCount = dgvBenhNhanDangKi.RowCount;
-            string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
-            if (col == "Column14")
-            {
-                   // BenhNhan dbDelete = benhnhan.FindIDBenhNhan(dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString());
-                    dgvBenhNhanDangKi.Rows.Add(rowCount.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[5].Value.ToString(), "0 đồng".ToString());
-                    dgvBenhNhan.Rows.Remove(dgvBenhNhan.CurrentRow);
-                   // db1.BenhNhans.Remove(dbDelete); // Xóa ở DB
-                    db1.SaveChanges();
-                MessageBox.Show("Đăng kí khám thành công");
-            }
-        }
-
-        private void btnTraBenhNhan_Click(object sender, EventArgs e)
-        {
             try
             {
-                if (dgvBenhNhan.Rows.Count > 0)
+                DateTime currentDateTime = DateTime.Now;
+                int rowCount = dgvBenhNhanDangKi.RowCount;
+                string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
+                var listBenhNhan = benhnhan.GetAll();
+                foreach (var item in listBenhNhan)
                 {
-                  
-                    for (int i = 0; i < dgvBenhNhanDangKi.Rows.Count; i++)
+                    if (col == "Column14" && item.HoTen == txtNameBN.Text)
                     {
-                        if (dgvBenhNhanDangKi.Rows[i].Cells[1].Value.ToString() == txtIDBN.Text)
+                        DanhSachKham ba = new DanhSachKham()
                         {
-                            BenhNhan s = benhnhan.FindIDBenhNhan(txtIDBN.Text);
-                            dgvBenhNhan.Rows.Add(s.IDBenhNhan,s.HoTen,s.Gioi == false ? "Nữ" : "Nam", s.NamSinh, s.SDT, s.DiaChi);
-                            int rowIndex = dgvBenhNhanDangKi.SelectedRows[i].Index;
-                            dgvBenhNhanDangKi.Rows.RemoveAt(rowIndex);
-                            MessageBox.Show("Trả bệnh nhân thành công !");
-                        }
+                            IDKham = "ST" + dgvBenhNhanDangKi.Rows.Count,
+                            IDBenhNhan = item.IDBenhNhan,
+                            NgayKham = item.NgayKhamDau.Value,
+                            //MaNV = item.BacSis.Ten,
+                        };
+                        MessageBox.Show("Đăng kí thành công");
+                        var listBNDK = dangki.GetAll();
+                        FillBenhnhanDangKi(listBNDK);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Trả bệnh nhân thành công");
-              
+
+                MessageBox.Show(ex.Message);
             }
         }
-
-        private void dgvBenhNhanDangKi_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void FillBenhnhanDangKi(List<DanhSachKham> list)
         {
-            //try
-            //{
-            //    List<BenhNhan> listBN = db1.BenhNhans.ToList();
-
-            //    if (dgvBenhNhanDangKi.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            //    {
-            //        dgvBenhNhanDangKi.CurrentRow.Selected = true;
-            //        txtIDBN.Text = dgvBenhNhanDangKi.Rows[e.RowIndex].Cells["Column8"].FormattedValue.ToString();
-            //        txtNameBN.Text = dgvBenhNhanDangKi.Rows[e.RowIndex].Cells["Column9"].FormattedValue.ToString();
-            //        txtNamSinhBN.Text = dgvBenhNhanDangKi.Rows[e.RowIndex].Cells["Column10"].FormattedValue.ToString();
-            //        txtSDTBN.Text = dgvBenhNhanDangKi.Rows[e.RowIndex].Cells["Column11"].FormattedValue.ToString();
-            //        txtDiaChiBN.Text = dgvBenhNhanDangKi.Rows[e.RowIndex].Cells["Column12"].FormattedValue.ToString();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            dgvBenhNhanDangKi.Rows.Clear();
+            foreach (var item in list)
+            {
+                int index = dgvBenhNhanDangKi.Rows.Add();
+                dgvNhaKhoa.Rows[index].Cells[0].Value = item.IDKham;
+                dgvNhaKhoa.Rows[index].Cells[1].Value = item.IDBenhNhan;
+                dgvNhaKhoa.Rows[index].Cells[2].Value = item.BenhNhan.HoTen;
+                dgvNhaKhoa.Rows[index].Cells[3].Value = item.BenhNhan.NamSinh;
+                dgvNhaKhoa.Rows[index].Cells[4].Value = item.BenhNhan.SDT;
+                dgvNhaKhoa.Rows[index].Cells[5].Value = item.NgayKham;
+                dgvNhaKhoa.Rows[index].Cells[6].Value = null;
+            }
         }
-
         private void button5_Click(object sender, EventArgs e)
         {
           FormReportView formrp = new FormReportView();
          formrp.ShowDialog();
-        }
-      
-        private void timerTrangChu_Tick(object sender, EventArgs e)
-        {
-          
-            if (indexPicture > imageListTrangChu.Images.Count - 1)
-            {
-                indexPicture = 0;
-            }
-            if(indexPicture2 < 0)
-            {
-                indexPicture2 = imageListTrangChu.Images.Count -1;
-         
-            }
-            pictureBox1.Image = imageListTrangChu.Images[indexPicture++];
-            pictureBox2.Image = imageListTrangChu.Images[indexPicture2--];
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -650,6 +520,28 @@ namespace FormLogin
         {
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
+        }
+
+        private void tabTiepNhan_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvBenhNhan_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
+            if (col == "Column14")
+            {
+                dgvBenhNhanDangKi.Rows.Add(dgvBenhNhanDangKi.Rows.Count
+                    , dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString()
+                    , dgvBenhNhan.Rows[e.RowIndex].Cells[2].Value.ToString()
+                    , dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString()
+                    , dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString()
+                    , dgvBenhNhan.Rows[e.RowIndex].Cells[5].Value.ToString()
+                    , null));
+                dgvBenhNhan.Rows.RemoveAt(dgvBenhNhan.CurrentRow.Index);
+                MessageBox.Show("Đăng kí bệnh nhân thành công");
+            }
         }
     }
 }

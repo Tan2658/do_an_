@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BenhNhanDangKiService.cs" />
     <Compile Include="BenhNhanService.cs" />
     <Compile Include="TaiKhoanService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

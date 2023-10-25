@@ -14,44 +14,28 @@ namespace BUS
         public List<BacSi> GetAll()
         {
             DentalContextDB db = new DentalContextDB();
-            return db.BacSi.ToList();
+            return db.BacSis.ToList();
         }
-       //public List<BacSi> GetRegisted()
-       //{
-       //    DentalContextDB db = new DentalContextDB();
-       //  return db.BacSi.Where(p => p.TrangThai == "Sử Dụng" ||  p.TrangThai == "No Sử Dụng").ToList();
-       //}
-       // public List<BacSi> GetRegister()
-       // {
-       //     DentalContextDB db = new DentalContextDB();
-       //     return db.BacSi.Where(p => p.TrangThai == "Đăng kí").ToList();
-       // }
+      public List<BacSi> GetAllDoctor()
+      {
+         DentalContextDB db = new DentalContextDB();
+       return db.BacSis.Where(p => p.ChucVu == "Bác Sĩ").ToList();
+      }
+       public List<BacSi> GetAllStaff()
+      {
+           DentalContextDB db = new DentalContextDB();
+           return db.BacSis.Where(p => p.ChucVu == "Nhân Viên").ToList();
+       }
         public void InsertUpdate(BacSi bacSi)
         {
             DentalContextDB db = new DentalContextDB();
-            db.BacSi.AddOrUpdate(bacSi);
+            db.BacSis.AddOrUpdate(bacSi);
             db.SaveChanges();
         }
-        //public List<BacSi> SortRegisted()
-        //{
-        //    DentalContextDB db = new DentalContextDB();
-        //    return db.BacSi.Where(p => p.TrangThai == "Sử Dụng" || p.TrangThai == "No Sử Dụng").OrderBy(p => p.Ten).ToList();
-        //}
-        //// test
-        //public List<BacSi> SortRegister()
-        //{
-        //    DentalContextDB db = new DentalContextDB();
-        //    return db.BacSi.Where(p => p.TrangThai == "Đăng kí").OrderBy(p => p.Ten).ToList();
-        //}
-        public BacSi findByExperience(string experience)
+        public BacSi getDoctorManyexperience(string name)
         {
             DentalContextDB db = new DentalContextDB();
-            return db.BacSi.FirstOrDefault(p => p.KinhNghiem == experience);
-        }
-        public BacSi findByName(string name)
-        {
-            DentalContextDB db = new DentalContextDB();
-            return db.BacSi.FirstOrDefault(p => p.Ten == name);
+            return db.BacSis.FirstOrDefault(b => b.Ten == name);
         }
     }
 }

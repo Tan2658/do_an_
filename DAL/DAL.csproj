@@ -58,13 +58,16 @@
     <Compile Include="Data\CanLamSang.cs" />
     <Compile Include="Data\ChanDoan.cs" />
     <Compile Include="Data\CTDonThuoc.cs" />
+    <Compile Include="Data\DanhSachKham.cs" />
     <Compile Include="Data\DentalContextDB.cs" />
     <Compile Include="Data\DichVu.cs" />
     <Compile Include="Data\DieuTri.cs" />
     <Compile Include="Data\DonThuoc.cs" />
-    <Compile Include="Data\DungCuNhaKhoa.cs" />
     <Compile Include="Data\HoaDon.cs" />
+    <Compile Include="Data\Kho.cs" />
+    <Compile Include="Data\LichSuNhapXuat.cs" />
     <Compile Include="Data\TaiKhoan.cs" />
+    <Compile Include="Data\ThiTruong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
