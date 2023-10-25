@@ -21,10 +21,10 @@ namespace BUS
             DentalContextDB db1 = new DentalContextDB ();
             return db1.BenhNhan.FirstOrDefault(p => p.IDBenhNhan == idBenhNhan);
         }
-        public List<BenhNhan> FindBenhNhanWithMonth(int startMonth, int endMonth)
-        {
-            DentalContextDB db1 = new DentalContextDB();
-            return db1.BenhNhan.Where(p => p.NgayKhamDau.Month < endMonth && p.NgayKhamDau.Month > startMonth).ToList();
-        }
+        //public List<BenhNhan> FindBenhNhanWithMonth(int startMonth, int endMonth)
+        //{
+         //   DentalContextDB db1 = new DentalContextDB();
+           // return db1.BenhNhan.Where(p => p. NgayKhamDau. < endMonth && p.NgayKhamDau.Month > startMonth).ToList();
+        //}
     }
 }

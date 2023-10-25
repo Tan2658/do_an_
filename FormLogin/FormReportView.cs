@@ -39,7 +39,7 @@ namespace FormLogin
                 temp.HoTen = item.HoTen;
                 temp.NamSinh = item.NamSinh;
                 temp.NgayKhamDau = item.NgayKhamDau;
-                temp.LyDo = item.LyDo;
+                //temp.LyDo = item.LyDo;
                 formReportViews.Add(temp);
 
             }

@@ -34,6 +34,7 @@ namespace FormLogin
         private void khámBệnhToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = true;
+            tabTiepNhan.Parent = tabTrangChu;
             tabNguoiDung.Parent = null;
         }
         int indexPicture = 0;
@@ -41,8 +42,8 @@ namespace FormLogin
         private void FormTrangChu_Load(object sender, EventArgs e)
         {
            
-            pictureBox1.Image = imageListTrangChu.Images[indexPicture];
-            pictureBox2.Image = imageListTrangChu.Images[indexPicture2];
+            //pictureBox1.Image = imageListTrangChu.Images[indexPicture];
+            //pictureBox2.Image = imageListTrangChu.Images[indexPicture2];
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             dateTimePicker2.Format = DateTimePickerFormat.Custom;
@@ -60,6 +61,7 @@ namespace FormLogin
         {
            // tabNguoiDung.Parent = tabTrangChu;
             tabTrangChu.Visible = true;
+            tabNguoiDung.Parent = tabTrangChu;
             tabTiepNhan.Parent = null;
         }
 
@@ -205,17 +207,7 @@ namespace FormLogin
             //}
         }
 
-        private void dgvDangKi_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-         
-            string col = dgvDangKi.Columns[e.ColumnIndex].Name;
-            if(col == "col8")
-            {
-                dgvNguoiDung.Rows.Add(dgvDangKi.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[2].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[3].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[4].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[5].Value.ToString(), dgvDangKi.Rows[e.RowIndex].Cells[6].Value.ToString());
-                dgvDangKi.Rows.RemoveAt(dgvDangKi.CurrentRow.Index);
-           
-            }
-        }
+       
 
         private void dgvNguoiDung_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -338,83 +330,83 @@ namespace FormLogin
             return sb.ToString().Normalize(NormalizationForm.FormC);
         }
 
-        private void btnTim_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbTimKiemBN.Checked)
-                {
-                    int starMonth = Convert.ToInt32(dateTimePicker1.Value.Month);
-                    int endMonth = Convert.ToInt32(dateTimePicker2.Value.Month);
-                    var listBNbyMonth = benhnhan.FindBenhNhanWithMonth(starMonth, endMonth);
-                    dgvBenhNhan.Rows.Clear();
-                    foreach (var item in listBNbyMonth)
-                    {
-                        int index = dgvBenhNhan.Rows.Add();
-                        dgvBenhNhan.Rows[index].Cells[0].Value = item.IDBenhNhan;
-                        dgvBenhNhan.Rows[index].Cells[1].Value = item.HoTen;
-                        if (item.Gioi == false)
-                        {
-                            dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
+        //private void btnTim_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (cbTimKiemBN.Checked)
+        //        {
+        //            int starMonth = Convert.ToInt32(dateTimePicker1.Value.Month);
+        //            int endMonth = Convert.ToInt32(dateTimePicker2.Value.Month);
+        //            var listBNbyMonth = benhnhan.FindBenhNhanWithMonth(starMonth, endMonth);
+        //            dgvBenhNhan.Rows.Clear();
+        //            foreach (var item in listBNbyMonth)
+        //            {
+        //                int index = dgvBenhNhan.Rows.Add();
+        //                dgvBenhNhan.Rows[index].Cells[0].Value = item.IDBenhNhan;
+        //                dgvBenhNhan.Rows[index].Cells[1].Value = item.HoTen;
+        //                if (item.Gioi == false)
+        //                {
+        //                    dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
 
-                        }
-                        else
-                        {
-                            dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
-                        }
-                        dgvBenhNhan.Rows[index].Cells[3].Value = item.NamSinh;
-                        dgvBenhNhan.Rows[index].Cells[4].Value = item.SDT;
-                        dgvBenhNhan.Rows[index].Cells[5].Value = item.DiaChi;
-                    }
-                }
-                else if (txtNameBN.Text == "")
-                {
-                    BenhNhan IDBenhNhan = benhnhan.FindIDBenhNhan(txtIDBN.Text);
-                    dgvBenhNhan.Rows.Clear();
-                    int index = dgvBenhNhan.Rows.Add();
-                    dgvBenhNhan.Rows[index].Cells[0].Value = IDBenhNhan.IDBenhNhan;
-                    dgvBenhNhan.Rows[index].Cells[1].Value = IDBenhNhan.HoTen;
-                    if (IDBenhNhan.Gioi == false)
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
+        //                }
+        //                else
+        //                {
+        //                    dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
+        //                }
+        //                dgvBenhNhan.Rows[index].Cells[3].Value = item.NamSinh;
+        //                dgvBenhNhan.Rows[index].Cells[4].Value = item.SDT;
+        //                dgvBenhNhan.Rows[index].Cells[5].Value = item.DiaChi;
+        //            }
+        //        }
+        //        else if (txtNameBN.Text == "")
+        //        {
+        //            BenhNhan IDBenhNhan = benhnhan.FindIDBenhNhan(txtIDBN.Text);
+        //            dgvBenhNhan.Rows.Clear();
+        //            int index = dgvBenhNhan.Rows.Add();
+        //            dgvBenhNhan.Rows[index].Cells[0].Value = IDBenhNhan.IDBenhNhan;
+        //            dgvBenhNhan.Rows[index].Cells[1].Value = IDBenhNhan.HoTen;
+        //            if (IDBenhNhan.Gioi == false)
+        //            {
+        //                dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
 
-                    }
-                    else
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
-                    }
-                    dgvBenhNhan.Rows[index].Cells[3].Value = IDBenhNhan.NamSinh;
-                    dgvBenhNhan.Rows[index].Cells[4].Value = IDBenhNhan.SDT;
-                    dgvBenhNhan.Rows[index].Cells[5].Value = IDBenhNhan.DiaChi;
-                }
-                else
-                {
-                    for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
-                    {
-                        string name = dgvBenhNhan.Rows[i].Cells[1].Value.ToString();
-                        string findName = txtNameBN.Text;
+        //            }
+        //            else
+        //            {
+        //                dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
+        //            }
+        //            dgvBenhNhan.Rows[index].Cells[3].Value = IDBenhNhan.NamSinh;
+        //            dgvBenhNhan.Rows[index].Cells[4].Value = IDBenhNhan.SDT;
+        //            dgvBenhNhan.Rows[index].Cells[5].Value = IDBenhNhan.DiaChi;
+        //        }
+        //        else
+        //        {
+        //            for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+        //            {
+        //                string name = dgvBenhNhan.Rows[i].Cells[1].Value.ToString();
+        //                string findName = txtNameBN.Text;
 
-                        name = RemoveDiacritics(name);
-                        findName = RemoveDiacritics(findName);
+        //                name = RemoveDiacritics(name);
+        //                findName = RemoveDiacritics(findName);
 
-                        bool contains = name.IndexOf(findName, StringComparison.OrdinalIgnoreCase) >= 0;
-                        if (contains)
-                        {
-                            dgvBenhNhan.Rows[i].Visible = true;
-                        }
-                        else
-                        {
-                            dgvBenhNhan.Rows[i].Visible = false;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //                bool contains = name.IndexOf(findName, StringComparison.OrdinalIgnoreCase) >= 0;
+        //                if (contains)
+        //                {
+        //                    dgvBenhNhan.Rows[i].Visible = true;
+        //                }
+        //                else
+        //                {
+        //                    dgvBenhNhan.Rows[i].Visible = false;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                MessageBox.Show("Tìm thấy bệnh nhân thành công");
-            }
-        }
+        //        MessageBox.Show("Tìm thấy bệnh nhân thành công");
+        //    }
+        //}
         private bool checkDataFields()
         {
             if (txtIDBN.Text == "" || txtNameBN.Text == "" || txtNamSinhBN.Text == "" || txtSDTBN.Text == "" || txtGiaDinhBN.Text == "" || txtNgheNghiepBN.Text == ""  || txtTienSuBN.Text == "")
@@ -615,8 +607,8 @@ namespace FormLogin
                 indexPicture2 = imageListTrangChu.Images.Count -1;
          
             }
-            pictureBox1.Image = imageListTrangChu.Images[indexPicture++];
-            pictureBox2.Image = imageListTrangChu.Images[indexPicture2--];
+            //pictureBox1.Image = imageListTrangChu.Images[indexPicture++];
+            //pictureBox2.Image = imageListTrangChu.Images[indexPicture2--];
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -650,6 +642,21 @@ namespace FormLogin
         {
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
+        }
+
+        private void tabNguoiDung_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabTiepNhan_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

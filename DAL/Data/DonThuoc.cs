@@ -21,9 +21,14 @@ namespace DAL.Data
 
         [Required]
         [StringLength(3)]
-        public string IDBenhNhan { get; set; }
+        public string IDKham { get; set; }
 
-        public virtual BenhNhan BenhNhan { get; set; }
+        [Column(TypeName = "money")]
+        public decimal TongTien { get; set; }
+
+        public DateTime? NgayLapDT { get; set; }
+
+        public virtual DanhSachKham DanhSachKham { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CTDonThuoc> CTDonThuoc { get; set; }

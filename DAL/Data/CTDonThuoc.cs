@@ -20,21 +20,12 @@ namespace DAL.Data
         public string TenThuoc { get; set; }
 
         [Key]
-        [Column(Order = 2, TypeName = "money")]
-        public decimal DonGia { get; set; }
-
-        [Key]
-        [Column(Order = 3)]
-        [StringLength(255)]
-        public string DonViTinh { get; set; }
-
-        [Key]
-        [Column(Order = 4)]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SoLuong { get; set; }
 
         [Key]
-        [Column(Order = 5, TypeName = "money")]
+        [Column(Order = 3, TypeName = "money")]
         public decimal ThanhGia { get; set; }
 
         public virtual DonThuoc DonThuoc { get; set; }
