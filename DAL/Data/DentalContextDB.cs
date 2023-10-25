@@ -43,11 +43,6 @@ namespace DAL.Data
                 .IsFixedLength()
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BacSi>()
-                .HasMany(e => e.DanhSachKham)
-                .WithRequired(e => e.BacSi)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<BenhNhan>()
                 .Property(e => e.IDBenhNhan)
                 .IsFixedLength()

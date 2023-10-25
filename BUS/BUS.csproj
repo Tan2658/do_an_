@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BenhNhanService.cs" />
+    <Compile Include="DichVuService.cs" />
+    <Compile Include="DieuTriService.cs" />
+    <Compile Include="DSKhamService.cs" />
     <Compile Include="TaiKhoanService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NguoiDungService.cs" />

@@ -23,6 +23,11 @@ namespace FormLogin
         private readonly NguoiDungService nguoidung = new NguoiDungService();
         private readonly TaiKhoanService taikhoan = new TaiKhoanService();
         private readonly BenhNhanService benhnhan  = new BenhNhanService();
+        private readonly DSKhamService dskham = new DSKhamService();
+        private readonly DieuTriService dieutri = new DieuTriService();
+        private readonly DichVuService dichvu = new DichVuService();
+
+
         public FormTrangChu()
         {
             InitializeComponent();
@@ -33,6 +38,7 @@ namespace FormLogin
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = tabTrangChu;
             tabNguoiDung.Parent = null;
+            tabKhamBenh.Parent = null;
         }
         int indexPicture = 0;
         int indexPicture2 = 6;
@@ -47,6 +53,16 @@ namespace FormLogin
             lblKhamBenh.Hide();
             lblThongKe.Hide();
             lblTiepNhan.Hide();
+
+            fillBacSiBox();
+        }
+
+        private void fillBacSiBox()
+        {
+            List<BacSi> bacSis = nguoidung.GetRegisted();
+            cmbBacSi.DataSource = bacSis;
+            cmbBacSi.DisplayMember = "Ten";
+            cmbBacSi.ValueMember = "MaNV";
         }
 
         private void menustripNguoiDung_Click(object sender, EventArgs e)
@@ -55,6 +71,7 @@ namespace FormLogin
             tabTrangChu.Visible = true;
             tabNguoiDung.Parent = tabTrangChu;
             tabTiepNhan.Parent = null;
+            tabKhamBenh.Parent = null;
         }
 
         private void menustripNguoiDung_MouseEnter(object sender, EventArgs e)
@@ -223,6 +240,7 @@ namespace FormLogin
                         DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
                         if (dr == DialogResult.Yes)
                         {
+                            dskham.DeleteAllWithID(txtIDBN.Text);
                             benhnhan.Delete(txtIDBN.Text);
                             clearContentBN();
                             MessageBox.Show("Xóa bệnh nhân thành công", "Thông báo", MessageBoxButtons.OK);
@@ -345,10 +363,10 @@ namespace FormLogin
                 if (checkDataFields())
                 {
                     string stt = (dgvBenhNhan.Rows.Count + 1).ToString();
+
                     if (int.Parse(stt) < 10)
                         stt = stt.Insert(0, "00");
-                    else
-                        if (int.Parse(stt) < 100)
+                    else if (int.Parse(stt) < 100)
                             stt = stt.Insert(0, "0");
 
                     BenhNhan s =
@@ -436,6 +454,29 @@ namespace FormLogin
             }
         }
 
+        private string setIDKham(string ID)
+        {
+            List<DanhSachKham> danhSachKhams = dskham.GetAllWithID(ID);
+
+            if (danhSachKhams == null)
+                return "001";
+            else
+            {
+                int i = 1;
+                foreach (var item in danhSachKhams)
+                    i++;
+
+                string stt = i.ToString();
+
+                if (i < 10)
+                    return stt.Insert(0, "00");
+                else if (i < 100)
+                    return stt.Insert(0, "0");
+
+                return stt;
+            }
+        }
+
         private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowCount = dgvBenhNhanDangKi.RowCount;
@@ -443,6 +484,16 @@ namespace FormLogin
             if (col == "ColDKBN")
             {
                 dgvBenhNhanDangKi.Rows.Add(rowCount.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[5].Value.ToString(), "0 đồng".ToString());
+                
+                DanhSachKham ds = new DanhSachKham() 
+                { 
+                    IDBenhNhan = txtIDBN.Text, 
+                    IDKham = setIDKham(txtIDBN.Text), 
+                    MaNV = null, 
+                    NgayKham = System.DateTime.Now 
+                };
+                dskham.Add(ds);
+
                 MessageBox.Show("Đăng kí khám thành công");
             }
         }
@@ -513,52 +564,79 @@ namespace FormLogin
             //pictureBox2.Image = imageListTrangChu.Images[indexPicture2--];
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void txtNameBN_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = false;
         }
 
+        private void BindDSKham(string id)
+        {
+            List<DanhSachKham> danhSachKhams = dskham.GetAllWithID(id);
+
+            dgvBenhNhanKham.Rows.Clear();
+
+            foreach(var item in danhSachKhams)
+            {
+                int index = dgvBenhNhanKham.Rows.Add();
+                dgvBenhNhanKham.Rows[index].Cells[0].Value = item.IDKham;
+                dgvBenhNhanKham.Rows[index].Cells[1].Value = item.NgayKham;
+                dgvBenhNhanKham.Rows[index].Cells[2].Value = item.BenhNhan.HoTen;
+                dgvBenhNhanKham.Rows[index].Cells[3].Value = 0;
+            }
+        }
+
         private void menustripKhamBenh_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = true;
+            tabKhamBenh.Parent = tabTrangChu;
             tabNguoiDung.Parent = null;
+            tabTiepNhan.Parent = null;
+
+            BindDSKham(txtIDBN.Text);
         }
 
         private void menustripThuoc_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
+            tabKhamBenh.Parent = null;
+            tabNguoiDung.Parent = null;
         }
 
         private void menustripThongKe_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
+            tabKhamBenh.Parent = null;
+            tabNguoiDung.Parent = null;
         }
 
-        private void tabNguoiDung_Click(object sender, EventArgs e)
+        private void dgvBenhNhanKham_SelectionChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label16_Click(object sender, EventArgs e)
+        private void BindGridDieuTri()
         {
+            List<DichVu> dichVus = dichvu.GetAll();
+            dgvDieuTri.Rows.Clear();
 
+            foreach (var item in dichVus)
+            {
+                int index = dgvDieuTri.Rows.Add();
+
+                dgvDieuTri.Rows[index].Cells[0].Value = item.IDDichVu;
+                dgvDieuTri.Rows[index].Cells[1].Value = item.TenDichVu;
+                dgvDieuTri.Rows[index].Cells[2].Value = item.DonViTinh;
+                dgvDieuTri.Rows[index].Cells[3].Value = item.DonGia.ToString();
+                dgvDieuTri.Rows[index].Cells[4].Value = "0";
+                dgvDieuTri.Rows[index].Cells[5].Value = "0";
+            }
         }
 
-        private void tabTiepNhan_Click(object sender, EventArgs e)
+        private void btnTaoDieuTri_Click(object sender, EventArgs e)
         {
-
+            BindGridDieuTri();
         }
     }
 }

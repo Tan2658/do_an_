@@ -11,12 +11,6 @@ namespace BUS
 {
     public class NguoiDungService
     {
-        public List<BacSi> GetAll()
-        {
-            DentalContextDB db = new DentalContextDB();
-            return db.BacSi.ToList();
-        }
-
         public List<BacSi> GetRegisted()
         {
             DentalContextDB db = new DentalContextDB();

@@ -26,7 +26,6 @@ namespace DAL.Data
         [StringLength(3)]
         public string IDBenhNhan { get; set; }
 
-        [Required]
         [StringLength(3)]
         public string MaNV { get; set; }
 
