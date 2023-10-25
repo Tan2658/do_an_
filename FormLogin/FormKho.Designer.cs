@@ -135,7 +135,7 @@
             this.cboFind.Items.AddRange(new object[] {
             "Nhập ",
             "Xuất"});
-            this.cboFind.Location = new System.Drawing.Point(419, 95);
+            this.cboFind.Location = new System.Drawing.Point(431, 95);
             this.cboFind.Name = "cboFind";
             this.cboFind.Size = new System.Drawing.Size(151, 24);
             this.cboFind.TabIndex = 48;

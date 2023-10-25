@@ -811,7 +811,7 @@ namespace FormLogin
         {
             for (int i = 0; i < dgvThiTruong.Rows.Count; i++)
             {
-                if (cboFind.SelectedItem.ToString() == dgvThiTruong.Rows[i].Cells[3].Value.ToString())
+                if (cboFind.SelectedItem.ToString() == dgvThiTruong.Rows[i].Cells[2].Value.ToString())
                 {
                     dgvThiTruong.Rows[i].Visible = true;
                 }
