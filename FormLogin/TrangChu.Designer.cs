@@ -154,7 +154,6 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cboLoai = new System.Windows.Forms.ComboBox();
             this.btnNhapThem = new System.Windows.Forms.Button();
-            this.btnXoaNhap = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
             this.cboDVT = new System.Windows.Forms.ComboBox();
             this.dtpNhap = new System.Windows.Forms.DateTimePicker();
@@ -1300,7 +1299,6 @@
             this.groupBox7.Controls.Add(this.dgvThiTruong);
             this.groupBox7.Controls.Add(this.cboLoai);
             this.groupBox7.Controls.Add(this.btnNhapThem);
-            this.groupBox7.Controls.Add(this.btnXoaNhap);
             this.groupBox7.Controls.Add(this.label20);
             this.groupBox7.Controls.Add(this.cboDVT);
             this.groupBox7.Controls.Add(this.dtpNhap);
@@ -1395,7 +1393,7 @@
             // 
             // btnStore
             // 
-            this.btnStore.Location = new System.Drawing.Point(630, 165);
+            this.btnStore.Location = new System.Drawing.Point(630, 157);
             this.btnStore.Name = "btnStore";
             this.btnStore.Size = new System.Drawing.Size(75, 42);
             this.btnStore.TabIndex = 43;
@@ -1497,22 +1495,13 @@
             // 
             // btnNhapThem
             // 
-            this.btnNhapThem.Location = new System.Drawing.Point(630, 29);
+            this.btnNhapThem.Location = new System.Drawing.Point(630, 70);
             this.btnNhapThem.Name = "btnNhapThem";
             this.btnNhapThem.Size = new System.Drawing.Size(75, 42);
             this.btnNhapThem.TabIndex = 11;
             this.btnNhapThem.Text = "Thêm";
             this.btnNhapThem.UseVisualStyleBackColor = true;
             this.btnNhapThem.Click += new System.EventHandler(this.btnNhapThem_Click);
-            // 
-            // btnXoaNhap
-            // 
-            this.btnXoaNhap.Location = new System.Drawing.Point(630, 96);
-            this.btnXoaNhap.Name = "btnXoaNhap";
-            this.btnXoaNhap.Size = new System.Drawing.Size(73, 42);
-            this.btnXoaNhap.TabIndex = 10;
-            this.btnXoaNhap.Text = "Xóa";
-            this.btnXoaNhap.UseVisualStyleBackColor = true;
             // 
             // label20
             // 
@@ -2238,7 +2227,6 @@
         public System.Windows.Forms.DataGridView dgvThiTruong;
         private System.Windows.Forms.ComboBox cboLoai;
         private System.Windows.Forms.Button btnNhapThem;
-        private System.Windows.Forms.Button btnXoaNhap;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cboDVT;
         private System.Windows.Forms.DateTimePicker dtpNhap;
