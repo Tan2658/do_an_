@@ -14,17 +14,17 @@ namespace BUS
         public List<BenhNhan> GetAll()
         {
             DentalContextDB db1 = new DentalContextDB();
-            return db1.BenhNhan.ToList();
+            return db1.BenhNhans.ToList();
         }
         public BenhNhan FindIDBenhNhan(string idBenhNhan)
         {
             DentalContextDB db1 = new DentalContextDB ();
-            return db1.BenhNhan.FirstOrDefault(p => p.IDBenhNhan == idBenhNhan);
+            return db1.BenhNhans.FirstOrDefault(p => p.IDBenhNhan == idBenhNhan);
         }
-        public List<BenhNhan> FindBenhNhanWithMonth(int startMonth, int endMonth)
-        {
-            DentalContextDB db1 = new DentalContextDB();
-            return db1.BenhNhan.Where(p => p.NgayKhamDau.Month < endMonth && p.NgayKhamDau.Month > startMonth).ToList();
-        }
+        //public List<BenhNhan> FindBenhNhanWithMonth(int startMonth, int endMonth)
+        //{
+        //    DentalContextDB db1 = new DentalContextDB();
+        //    return db1.BenhNhans.Where(p => p.NgayKhamDau.Month < endMonth && p.NgayKhamDau.Month > startMonth).ToList();
+        //}
     }
 }

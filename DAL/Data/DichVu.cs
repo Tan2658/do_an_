@@ -12,7 +12,7 @@ namespace DAL.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DichVu()
         {
-            DieuTri = new HashSet<DieuTri>();
+            DieuTris = new HashSet<DieuTri>();
         }
 
         [Key]
@@ -37,6 +37,6 @@ namespace DAL.Data
         public virtual ChanDoan ChanDoan { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DieuTri> DieuTri { get; set; }
+        public virtual ICollection<DieuTri> DieuTris { get; set; }
     }
 }

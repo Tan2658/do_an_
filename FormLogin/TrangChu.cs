@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using Microsoft.Reporting.WinForms;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace FormLogin
 {
@@ -23,9 +25,9 @@ namespace FormLogin
         private readonly NguoiDungService nguoidung = new NguoiDungService();
         private readonly TaiKhoanService taikhoan = new TaiKhoanService();
         private readonly BenhNhanService benhnhan  = new BenhNhanService();
+        private readonly VatTuService ms= new VatTuService();
         ReportDataSource rp = new ReportDataSource();
-        DentalContextDB db1 = new DentalContextDB();
-        DentalContextDB db = new DentalContextDB();
+        DentalContextDB context = new DentalContextDB();
         public FormTrangChu()
         {
             InitializeComponent();
@@ -58,7 +60,7 @@ namespace FormLogin
 
         private void menustripNguoiDung_Click(object sender, EventArgs e)
         {
-           // tabNguoiDung.Parent = tabTrangChu;
+            tabNguoiDung.Parent = tabTrangChu;
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
         }
@@ -291,7 +293,7 @@ namespace FormLogin
             //{
             //    string ID = txtIDBN.Text;
 
-            //    BenhNhan dbDelete = db1.BenhNhans.FirstOrDefault(p => p.IDBenhNhan == ID);
+            //    BenhNhan dbDelete = context.BenhNhans.FirstOrDefault(p => p.IDBenhNhan == ID);
             //    if (dbDelete == null)
             //    {
             //        throw new Exception("Không tìm thấy benh nhan cần xóa !");
@@ -304,8 +306,8 @@ namespace FormLogin
             //            if (dr == DialogResult.Yes)
             //            {
             //                dgvBenhNhan.Rows.RemoveAt(dgvBenhNhan.CurrentRow.Index); // Xóa ở DGV
-            //                db1.BenhNhans.Remove(dbDelete); // Xóa ở DB
-            //                db1.SaveChanges();
+            //                context.BenhNhans.Remove(dbDelete); // Xóa ở context
+            //                context.SaveChanges();
             //                clearContentBN();
             //                MessageBox.Show("Xóa sinh viên thành công", "Thông báo", MessageBoxButtons.OK);
             //            }
@@ -340,80 +342,80 @@ namespace FormLogin
 
         private void btnTim_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (cbTimKiemBN.Checked)
-                {
-                    int starMonth = Convert.ToInt32(dateTimePicker1.Value.Month);
-                    int endMonth = Convert.ToInt32(dateTimePicker2.Value.Month);
-                    var listBNbyMonth = benhnhan.FindBenhNhanWithMonth(starMonth, endMonth);
-                    dgvBenhNhan.Rows.Clear();
-                    foreach (var item in listBNbyMonth)
-                    {
-                        int index = dgvBenhNhan.Rows.Add();
-                        dgvBenhNhan.Rows[index].Cells[0].Value = item.IDBenhNhan;
-                        dgvBenhNhan.Rows[index].Cells[1].Value = item.HoTen;
-                        if (item.Gioi == false)
-                        {
-                            dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
+            //try
+            //{
+            //    if (cbTimKiemBN.Checked)
+            //    {
+            //        int starMonth = Convert.ToInt32(dateTimePicker1.Value.Month);
+            //        int endMonth = Convert.ToInt32(dateTimePicker2.Value.Month);
+            //        var listBNbyMonth = benhnhan.FindBenhNhanWithMonth(starMonth, endMonth);
+            //        dgvBenhNhan.Rows.Clear();
+            //        foreach (var item in listBNbyMonth)
+            //        {
+            //            int index = dgvBenhNhan.Rows.Add();
+            //            dgvBenhNhan.Rows[index].Cells[0].Value = item.IDBenhNhan;
+            //            dgvBenhNhan.Rows[index].Cells[1].Value = item.HoTen;
+            //            if (item.Gioi == false)
+            //            {
+            //                dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
 
-                        }
-                        else
-                        {
-                            dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
-                        }
-                        dgvBenhNhan.Rows[index].Cells[3].Value = item.NamSinh;
-                        dgvBenhNhan.Rows[index].Cells[4].Value = item.SDT;
-                        dgvBenhNhan.Rows[index].Cells[5].Value = item.DiaChi;
-                    }
-                }
-                else if (txtNameBN.Text == "")
-                {
-                    BenhNhan IDBenhNhan = benhnhan.FindIDBenhNhan(txtIDBN.Text);
-                    dgvBenhNhan.Rows.Clear();
-                    int index = dgvBenhNhan.Rows.Add();
-                    dgvBenhNhan.Rows[index].Cells[0].Value = IDBenhNhan.IDBenhNhan;
-                    dgvBenhNhan.Rows[index].Cells[1].Value = IDBenhNhan.HoTen;
-                    if (IDBenhNhan.Gioi == false)
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
+            //            }
+            //            else
+            //            {
+            //                dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
+            //            }
+            //            dgvBenhNhan.Rows[index].Cells[3].Value = item.NamSinh;
+            //            dgvBenhNhan.Rows[index].Cells[4].Value = item.SDT;
+            //            dgvBenhNhan.Rows[index].Cells[5].Value = item.DiaChi;
+            //        }
+            //    }
+            //    else if (txtNameBN.Text == "")
+            //    {
+            //        BenhNhan IDBenhNhan = benhnhan.FindIDBenhNhan(txtIDBN.Text);
+            //        dgvBenhNhan.Rows.Clear();
+            //        int index = dgvBenhNhan.Rows.Add();
+            //        dgvBenhNhan.Rows[index].Cells[0].Value = IDBenhNhan.IDBenhNhan;
+            //        dgvBenhNhan.Rows[index].Cells[1].Value = IDBenhNhan.HoTen;
+            //        if (IDBenhNhan.Gioi == false)
+            //        {
+            //            dgvBenhNhan.Rows[index].Cells[2].Value = "Nữ";
 
-                    }
-                    else
-                    {
-                        dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
-                    }
-                    dgvBenhNhan.Rows[index].Cells[3].Value = IDBenhNhan.NamSinh;
-                    dgvBenhNhan.Rows[index].Cells[4].Value = IDBenhNhan.SDT;
-                    dgvBenhNhan.Rows[index].Cells[5].Value = IDBenhNhan.DiaChi;
-                }
-                else
-                {
-                    for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
-                    {
-                        string name = dgvBenhNhan.Rows[i].Cells[1].Value.ToString();
-                        string findName = txtNameBN.Text;
+            //        }
+            //        else
+            //        {
+            //            dgvBenhNhan.Rows[index].Cells[2].Value = "Nam";
+            //        }
+            //        dgvBenhNhan.Rows[index].Cells[3].Value = IDBenhNhan.NamSinh;
+            //        dgvBenhNhan.Rows[index].Cells[4].Value = IDBenhNhan.SDT;
+            //        dgvBenhNhan.Rows[index].Cells[5].Value = IDBenhNhan.DiaChi;
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+            //        {
+            //            string name = dgvBenhNhan.Rows[i].Cells[1].Value.ToString();
+            //            string findName = txtNameBN.Text;
 
-                        name = RemoveDiacritics(name);
-                        findName = RemoveDiacritics(findName);
+            //            name = RemoveDiacritics(name);
+            //            findName = RemoveDiacritics(findName);
 
-                        bool contains = name.IndexOf(findName, StringComparison.OrdinalIgnoreCase) >= 0;
-                        if (contains)
-                        {
-                            dgvBenhNhan.Rows[i].Visible = true;
-                        }
-                        else
-                        {
-                            dgvBenhNhan.Rows[i].Visible = false;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+            //            bool contains = name.IndexOf(findName, StringComparison.OrdinalIgnoreCase) >= 0;
+            //            if (contains)
+            //            {
+            //                dgvBenhNhan.Rows[i].Visible = true;
+            //            }
+            //            else
+            //            {
+            //                dgvBenhNhan.Rows[i].Visible = false;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                MessageBox.Show("Tìm thấy bệnh nhân thành công");
-            }
+            //    MessageBox.Show("Tìm thấy bệnh nhân thành công");
+            //}
         }
         private bool checkDataFields()
         {
@@ -453,11 +455,11 @@ namespace FormLogin
                             
                             
             //            };
-            //        db1.BenhNhans.Add(s);
-            //        db1.SaveChanges();
+            //        context.BenhNhans.Add(s);
+            //        context.SaveChanges();
             //        clearContentBN();
             //        MessageBox.Show("Thêm bệnh nhân thành công", "Thông báo", MessageBoxButtons.OK);
-            //        List<BenhNhan> listBN = db1.BenhNhans.ToList();
+            //        List<BenhNhan> listBN = context.BenhNhans.ToList();
             //        FillBenhNhan(listBN);
             //    }
             //}
@@ -496,7 +498,7 @@ namespace FormLogin
         {
             //try
             //{
-            //    List<BenhNhan> listBN = db1.BenhNhans.ToList();
+            //    List<BenhNhan> listBN = context.BenhNhans.ToList();
 
             //    if (dgvBenhNhan.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             //    {
@@ -542,8 +544,8 @@ namespace FormLogin
                    // BenhNhan dbDelete = benhnhan.FindIDBenhNhan(dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString());
                     dgvBenhNhanDangKi.Rows.Add(rowCount.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString(), dgvBenhNhan.Rows[e.RowIndex].Cells[5].Value.ToString(), "0 đồng".ToString());
                     dgvBenhNhan.Rows.Remove(dgvBenhNhan.CurrentRow);
-                   // db1.BenhNhans.Remove(dbDelete); // Xóa ở DB
-                    db1.SaveChanges();
+                   // context.BenhNhans.Remove(dbDelete); // Xóa ở context
+                    context.SaveChanges();
                 MessageBox.Show("Đăng kí khám thành công");
             }
         }
@@ -579,7 +581,7 @@ namespace FormLogin
         {
             //try
             //{
-            //    List<BenhNhan> listBN = db1.BenhNhans.ToList();
+            //    List<BenhNhan> listBN = context.BenhNhans.ToList();
 
             //    if (dgvBenhNhanDangKi.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             //    {
@@ -650,6 +652,377 @@ namespace FormLogin
         {
             tabTrangChu.Visible = true;
             tabTiepNhan.Parent = null;
+        }
+        private int GetSelectedRow(string id)
+        {
+            for (int i = 0; i < dgvThiTruong.Rows.Count; i++)
+            {
+                if (dgvThiTruong.Rows[i].Cells[0].Value.ToString() == id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        private bool checkDataFieldsMedic()
+        {
+            if (txtMa.Text == "" || txtTen.Text == "" || txtPrice.Text == "" || txtSL.Text == "")
+            {
+                MessageBox.Show("Vui long nhap day du thong tin");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void btnNhapThem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int selectRow = GetSelectedRow(txtMa.Text);
+                if (checkDataFieldsMedic() == true)
+                {
+                    decimal sl = Convert.ToDecimal(txtSL.Text);
+                    decimal donGia = Convert.ToDecimal(txtPrice.Text);
+                    if (selectRow == -1)
+                    {
+                        LichSuNhapXuat d = new LichSuNhapXuat()
+                        {
+                            NoiDung = rdoNhap.Checked ? true : false,
+                            IDDungCu = txtMa.Text,
+                            TenDungCu = txtTen.Text,
+                            Loai = cboLoai.Text,
+                            DonViTinh = cboDVT.Text,
+                            SoLuongNhapXuat = int.Parse(txtSL.Text),
+                            Don = decimal.Parse(txtPrice.Text),
+                            ThanhTien = sl * donGia,
+                            NgayNhap = dtpNhap.Value
+                        };
+                        if (rdoNhap.Checked == true && ms.FindIDKho(txtMa.Text) != null)
+                        {
+                            Kho k = context.Khoes.FirstOrDefault(p=> p.IDDungCu == txtMa.Text) ;
+                            k.SoLuong = k.SoLuong + int.Parse(txtSL.Text);
+                            context.SaveChanges();
+                            clearContentVatTuNhap();
+                        }
+                        else if (rdoXuat.Checked == true && ms.FindIDKho(txtMa.Text) != null)
+                        {
+                            Kho k = context.Khoes.FirstOrDefault(p => p.IDDungCu == txtMa.Text);
+
+                            if (k.SoLuong < int.Parse(txtSL.Text))
+                            {
+                                MessageBox.Show("Số lượng xuất lớn hơn số lượng tồn");
+                            }
+                            k.SoLuong = k.SoLuong - int.Parse(txtSL.Text);
+                            context.SaveChanges();
+                            clearContentVatTuNhap();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Chỉ được truy suất vào các mặt hàng có sẵn trên thị trường");
+                        }
+                        ms.InsertUpdate(d);
+                        MessageBox.Show("Thêm dữ liệu thành công", "Thông báo", MessageBoxButtons.OK);
+                        clearContentVatTuNhap();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+        public void clearContentVatTuNhap()
+        {
+            txtMa.Text = string.Empty;
+            txtTen.Text = string.Empty;
+            txtSL.Text = string.Empty;
+            cboDVT.SelectedIndex = -1;
+            txtPrice.Text = string.Empty;
+        }
+
+        
+        private void BindGridThiTruong(List<ThiTruong> Markets)
+        {
+            dgvThiTruong.Rows.Clear();
+            foreach (var market in Markets)
+            {
+                int index = dgvThiTruong.Rows.Add();
+                dgvThiTruong.Rows[index].Cells[0].Value = market.IDSanPham.ToString();
+                dgvThiTruong.Rows[index].Cells[1].Value = market.TenSanPham.ToString();
+                dgvThiTruong.Rows[index].Cells[2].Value = market.Loai.ToString();
+                dgvThiTruong.Rows[index].Cells[3].Value = market.DonViTinh.ToString();
+                dgvThiTruong.Rows[index].Cells[4].Value = market.DonGia.ToString();
+
+            }
+        }
+        private void btnXem_Click(object sender, EventArgs e)
+        {
+            List<ThiTruong> listMarket = context.ThiTruongs.ToList();
+            BindGridThiTruong(listMarket);
+        }
+
+        private void btnStore_Click(object sender, EventArgs e)
+        {
+            FormKho frm = new FormKho(this);
+            this.Hide();
+            frm.ShowDialog();
+            this.Show();
+        }
+
+        
+        private void dgvThiTruong_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvThiTruong.SelectedRows.Count > 0)
+            {
+                var listStore = new List<Kho>();
+                listStore = ms.GetAll();
+                foreach (var item in listStore)
+                {
+                    if (item.TenDungCu.ToString() == dgvThiTruong.Rows[e.RowIndex].Cells[1].Value.ToString())
+                    {
+                        txtMa.Text = item.IDDungCu.ToString();
+                        break;
+                    }
+
+                }
+                txtTen.Text = dgvThiTruong.Rows[e.RowIndex].Cells[1].Value.ToString();
+                cboLoai.Text = dgvThiTruong.Rows[e.RowIndex].Cells[2].Value.ToString();
+                cboDVT.Text = dgvThiTruong.Rows[e.RowIndex].Cells[3].Value.ToString();
+                txtPrice.Text = dgvThiTruong.Rows[e.RowIndex].Cells[4].Value.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Can chon vao dong ban muon sua");
+            }
+        }
+
+        private void btnLichSuNX_Click(object sender, EventArgs e)
+        {
+            FormLichSuNhapXuat frm = new FormLichSuNhapXuat(this);
+            this.Hide();
+            frm.ShowDialog();
+            this.Show();
+        }
+
+        private void cboFind_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dgvThiTruong.Rows.Count; i++)
+            {
+                if (cboFind.SelectedItem.ToString() == dgvThiTruong.Rows[i].Cells[3].Value.ToString())
+                {
+                    dgvThiTruong.Rows[i].Visible = true;
+                }
+                else
+                {
+                    dgvThiTruong.Rows[i].Visible = false;
+                }
+            }
+        }
+
+        private void tabTK_Enter(object sender, EventArgs e)
+        {
+            dtpMonth.CustomFormat = "MM/yyyy";
+            dtpMonth.Format = DateTimePickerFormat.Custom;
+            dtpYear.CustomFormat = "yyyy";
+            dtpYear.Format = DateTimePickerFormat.Custom;
+            dtpQuy.CustomFormat = "MM/yyyy";
+            dtpQuy.Format = DateTimePickerFormat.Custom;
+            List<LichSuNhapXuat> listStatic = context.LichSuNhapXuats.ToList();
+            BindGridTK(listStatic);
+        }
+
+        private void BindGridTK(List<LichSuNhapXuat> Statics)
+        {
+            dgvThongKeVT.Rows.Clear();
+            foreach (var item in Statics)
+            {
+                int index = dgvThongKeVT.Rows.Add();
+                if (item.NoiDung == false)
+                {
+                    dgvThongKeVT.Rows[index].Cells[0].Value = "Xuất";
+                }
+                else
+                {
+                    dgvThongKeVT.Rows[index].Cells[0].Value = "Nhập";
+                }
+                dgvThongKeVT.Rows[index].Cells[1].Value = item.IDDungCu;
+                dgvThongKeVT.Rows[index].Cells[2].Value = item.TenDungCu.ToString();
+                dgvThongKeVT.Rows[index].Cells[3].Value = item.Loai.ToString();
+                dgvThongKeVT.Rows[index].Cells[4].Value = item.DonViTinh.ToString();
+                dgvThongKeVT.Rows[index].Cells[5].Value = item.SoLuongNhapXuat.ToString();
+                dgvThongKeVT.Rows[index].Cells[6].Value = item.Don.ToString();
+                dgvThongKeVT.Rows[index].Cells[7].Value = item.ThanhTien.ToString();
+                dgvThongKeVT.Rows[index].Cells[8].Value = item.NgayNhap.ToString();
+
+            }
+        }
+
+        private void btnLoadTK_Click(object sender, EventArgs e)
+        {
+            List<LichSuNhapXuat> listStatic = context.LichSuNhapXuats.ToList();
+            BindGridTK(listStatic);
+        }
+
+        private void btnThongKeVT_Click(object sender, EventArgs e)
+        {
+            decimal TienTong = 0;
+            decimal TienXuat = 0;
+            decimal TienNhap = 0;
+            int countNhap = 0;
+            int countXuat = 0;
+            for (int i = 0; i < dgvThongKeVT.Rows.Count; i++)
+            {
+                if (rdpMoth.Checked)
+                {
+                    if (dtpMonth.Value.Month.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Month.ToString()
+                        && dtpYear.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                    {
+                        if (dgvThongKeVT.Rows[i].Cells[0].Value.ToString() == "Nhập")
+                        {
+                            countNhap++;
+                            TienNhap += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                            TienTong -= decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                        }
+                        else
+                        {
+                           countXuat++;
+                           TienXuat+= decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                           TienTong+= decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+
+                        }
+                        txtNhap.Text=countNhap.ToString();
+                        txtXuat.Text=countXuat.ToString();
+                        txtTienNhap.Text = TienNhap.ToString();
+                        txtTienXuat.Text = TienXuat.ToString();
+                        txtDoanh.Text = TienTong.ToString();
+                    }
+                }
+                else if (rdpYear.Checked)
+                {
+                    if (dtpYear.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                    {
+                        if (dgvThongKeVT.Rows[i].Cells[0].Value.ToString() == "Nhập")
+                        {
+                            countNhap++;
+                            TienNhap += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                            TienTong -= decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                        }
+                        else
+                        {
+                            countXuat++;
+                            TienXuat += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                            TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+
+                        }
+                        txtNhap.Text = countNhap.ToString();
+                        txtXuat.Text = countXuat.ToString();
+                        txtTienNhap.Text = TienNhap.ToString();
+                        txtTienXuat.Text = TienXuat.ToString();
+                        txtDoanh.Text = TienTong.ToString();
+                    }
+                }
+                else if (rdpQui.Checked)
+                {
+                    if (dtpQuy.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                    {
+                        int quy = cboQui.SelectedIndex;
+                        int transactionQuarter =
+                              (int.Parse(DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Month.ToString()) - 1) / 3;
+                        if (transactionQuarter == quy)
+                        {
+                            if (dgvThongKeVT.Rows[i].Cells[0].Value.ToString() == "Nhập")
+                            {
+                                countNhap++;
+                                TienNhap += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                                TienTong -= decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                            }
+                            else
+                            {
+                                countXuat++;
+                                TienXuat += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+                                TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[7].Value.ToString());
+
+                            }
+                        }
+                        txtNhap.Text = countNhap.ToString();
+                        txtXuat.Text = countXuat.ToString();
+                        txtTienNhap.Text = TienNhap.ToString();
+                        txtTienXuat.Text = TienXuat.ToString();
+                        txtDoanh.Text = TienTong.ToString();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ban can phai chon nut thong kẻ");
+                    break;
+                }
+            }
+        }
+
+        private void dtpMonth_ValueChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dgvThongKeVT.Rows.Count; i++)
+            {
+
+                if( dtpMonth.Value.Month.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Month.ToString()
+                        && dtpYear.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                {
+                    dgvThongKeVT.Rows[i].Visible = true;
+                }
+                else
+                {
+                    dgvThongKeVT.Rows[i].Visible = false;
+                }
+            }
+        }
+
+        private void tabTrangChu_Enter(object sender, EventArgs e)
+        {
+            List<ThiTruong> listMarket = context.ThiTruongs.ToList();
+            BindGridThiTruong(listMarket);
+        }
+
+        private void dtpQuy_ValueChanged(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < dgvThongKeVT.Rows.Count; i++)
+            {
+
+
+                if (dtpQuy.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                {
+                    int quy = cboQui.SelectedIndex;
+                    int transactionQuarter =
+                          (int.Parse(DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Month.ToString()) - 1) / 3;
+                    if (transactionQuarter == quy)
+                    {
+                        dgvThongKeVT.Rows[i].Visible = true;
+                    }
+                }
+                else
+                {
+                    dgvThongKeVT.Rows[i].Visible = false;
+                }
+            }
+        }
+
+        private void dtpYear_ValueChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dgvThongKeVT.Rows.Count; i++)
+            {
+
+                if (dtpYear.Value.Year.ToString() == DateTime.Parse(dgvThongKeVT.Rows[i].Cells[8].Value.ToString()).Year.ToString())
+                {
+                    dgvThongKeVT.Rows[i].Visible = true;
+                }
+                else
+                {
+                    dgvThongKeVT.Rows[i].Visible = false;
+                }
+            }
         }
     }
 }
