@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Web;
 using System.Windows.Forms;
+using BUS;
 using DAL.Data;
 
 namespace FormLogin
@@ -18,7 +19,8 @@ namespace FormLogin
         System.Timers.Timer timer;
         int minute = 2, second;
 
-        DentalContextDB context = new DentalContextDB();
+       
+        private readonly TaiKhoanService tk = new TaiKhoanService();
         public formLogin()
         {
             InitializeComponent();
@@ -128,34 +130,33 @@ namespace FormLogin
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    timer.Stop();
-            //    List<TaiKhoan> ts  = context.TaiKhoans.ToList();
-            //   foreach(var item in ts)
-            //    {
-            //        if(txtAccount.Text == "" || txtPassword.Text == "")
-            //        {
-            //            MessageBox.Show("Yêu cầu nhập các fields đầy đủ !");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text == item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Nếu bạn quên mật khẩu thì click vào Forget Password ?");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text != item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Tài khoản và Mật khẩu bạn chưa tổn tại !!!");
-            //        }
-            //        else
-            //        {
+            try
+            {
+                timer.Stop();
+                var checkTk = tk.GetTaiKhoan(txtAccount.Text);
+                if (txtAccount.Text == "" || txtPassword.Text == "")
+                {
+                    MessageBox.Show("Yêu cầu nhập các fields đầy đủ !");
+                }else if (txtPassword.Text != checkTk.MatKhau)
+                {
+                    MessageBox.Show("Tài khoản bạn sai mật khẩu");
+                }else if (txtAccount.Text.Contains("nhanvien"))
+                {
+                    MessageBox.Show("Nhân viên không được quyền truy cập");
+                }
+                else
+                {
+                    MessageBox.Show("Đăng nhập thành công");
+                    FormTrangChu f2 = new FormTrangChu();
+                    f2.ShowDialog();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
 
-            //            MessageBox.Show("Đăng nhập thành công !");
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message);
-            //}
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnForget_Click(object sender, EventArgs e)
@@ -164,7 +165,7 @@ namespace FormLogin
 
             ForgetPassword form = new ForgetPassword();
             form.Show();
-            //this.Close();
+            this.Close();
         }
       
         private void panel2_Paint(object sender, PaintEventArgs e)

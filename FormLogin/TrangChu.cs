@@ -437,37 +437,7 @@ namespace FormLogin
                 FillBenhNhan(listBN);
             }
         }
-        private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                DateTime currentDateTime = DateTime.Now;
-                int rowCount = dgvBenhNhanDangKi.RowCount;
-                string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
-                var listBenhNhan = benhnhan.GetAll();
-                foreach (var item in listBenhNhan)
-                {
-                    if (col == "Column14" && item.HoTen == txtNameBN.Text)
-                    {
-                        DanhSachKham ba = new DanhSachKham()
-                        {
-                            IDKham = "ST" + dgvBenhNhanDangKi.Rows.Count,
-                            IDBenhNhan = item.IDBenhNhan,
-                            NgayKham = item.NgayKhamDau.Value,
-                            //MaNV = item.BacSis.Ten,
-                        };
-                        MessageBox.Show("Đăng kí thành công");
-                        var listBNDK = dangki.GetAll();
-                        FillBenhnhanDangKi(listBNDK);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-        }
+       
         private void FillBenhnhanDangKi(List<DanhSachKham> list)
         {
             dgvBenhNhanDangKi.Rows.Clear();
@@ -479,7 +449,7 @@ namespace FormLogin
                 dgvNhaKhoa.Rows[index].Cells[2].Value = item.BenhNhan.HoTen;
                 dgvNhaKhoa.Rows[index].Cells[3].Value = item.BenhNhan.NamSinh;
                 dgvNhaKhoa.Rows[index].Cells[4].Value = item.BenhNhan.SDT;
-                dgvNhaKhoa.Rows[index].Cells[5].Value = item.NgayKham;
+                dgvNhaKhoa.Rows[index].Cells[5].Value = item.BenhNhan.NgayKhamDau;
                 dgvNhaKhoa.Rows[index].Cells[6].Value = null;
             }
         }
@@ -526,21 +496,59 @@ namespace FormLogin
         {
 
         }
+        DanhSachKham c;
 
-        private void dgvBenhNhan_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+
+        private void btnDangKi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BenhNhan b = benhnhan.findNameBenhNhan(txtNameBN.Text);
+                if(b.HoTen == txtNameBN.Text)
+                {
+                    c = new DanhSachKham()
+                    {
+                        IDKham = dgvBenhNhanDangKi.Rows.Count.ToString(),
+                        IDBenhNhan = txtNameBN.Text,
+                        MaNV = c.MaNV.ToString(),
+                        NgayKham = dtNgayKhamDau.Value
+                    };
+                    dangki.InsertUpdateDanhSachKham(c);
+                    MessageBox.Show("Đăng kí bệnh nhân thành công");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
-            if (col == "Column14")
+            BenhNhan b = benhnhan.findNameBenhNhan(txtNameBN.Text);
+            var doctormanyExperience = nguoidung.getDoctorManyexperience("Bác sĩ B");
+            if (col == "Column14" && b.HoTen == txtNameBN.Text)
             {
-                dgvBenhNhanDangKi.Rows.Add(dgvBenhNhanDangKi.Rows.Count
-                    , dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString()
-                    , dgvBenhNhan.Rows[e.RowIndex].Cells[2].Value.ToString()
-                    , dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString()
-                    , dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString()
-                    , dgvBenhNhan.Rows[e.RowIndex].Cells[5].Value.ToString()
-                    , null));
+                dgvBenhNhanDangKi.Rows.Add(dgvBenhNhanDangKi.Rows.Count,
+                dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString(),
+                dgvBenhNhan.Rows[e.RowIndex].Cells[1].Value.ToString(),
+               dgvBenhNhan.Rows[e.RowIndex].Cells[3].Value.ToString(),
+               dgvBenhNhan.Rows[e.RowIndex].Cells[4].Value.ToString(),
+                dtNgayKhamDau.Value.ToString(),
+                  "0 Đồng");
                 dgvBenhNhan.Rows.RemoveAt(dgvBenhNhan.CurrentRow.Index);
                 MessageBox.Show("Đăng kí bệnh nhân thành công");
+                c = new DanhSachKham()
+                {
+                    IDKham = dgvBenhNhanDangKi.Rows.Count.ToString(),
+                    IDBenhNhan = dgvBenhNhan.Rows[e.RowIndex].Cells[0].Value.ToString(),
+                    NgayKham = b.NgayKhamDau.Value,
+                    MaNV = doctormanyExperience.MaNV,
+                };
+                dangki.InsertUpdateDanhSachKham(c);
             }
         }
     }
