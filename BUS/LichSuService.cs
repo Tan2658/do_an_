@@ -15,5 +15,11 @@ namespace BUS
             context.LichSuNhapXuat.Add(ls);
             context.SaveChanges();
         }
+
+        public List<LichSuNhapXuat> GetAll()
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.LichSuNhapXuat.ToList();
+        }
     }
 }

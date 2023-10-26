@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnLog = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
@@ -45,7 +44,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnLog);
             this.panel1.Controls.Add(this.btnReset);
             this.panel1.Controls.Add(this.txtUsername);
             this.panel1.Controls.Add(this.txtNewPassword);
@@ -57,22 +55,11 @@
             this.panel1.Size = new System.Drawing.Size(253, 365);
             this.panel1.TabIndex = 1;
             // 
-            // btnLog
-            // 
-            this.btnLog.BackColor = System.Drawing.Color.Aqua;
-            this.btnLog.Location = new System.Drawing.Point(139, 318);
-            this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(101, 29);
-            this.btnLog.TabIndex = 6;
-            this.btnLog.Text = "Login";
-            this.btnLog.UseVisualStyleBackColor = false;
-            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
-            // 
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.Color.IndianRed;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(26, 318);
+            this.btnReset.Location = new System.Drawing.Point(133, 321);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(107, 29);
             this.btnReset.TabIndex = 5;
@@ -176,7 +163,6 @@
         private System.Windows.Forms.TextBox txtNewPassword;
         private System.Windows.Forms.Label lblNewPas;
         private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnClose;
     }

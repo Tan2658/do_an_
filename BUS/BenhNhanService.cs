@@ -27,6 +27,12 @@ namespace BUS
             return db1.BenhNhan.Where(p => p.NgayKhamDau.Value.Month <= endMonth && p.NgayKhamDau.Value.Month >= startMonth).ToList();
         }
 
+        public BenhNhan FindNameBenhNhan(string nameBenhNhan)
+        {
+            DentalContextDB db1 = new DentalContextDB();
+            return db1.BenhNhan.FirstOrDefault(p => p.HoTen == nameBenhNhan);
+        }
+
         public void Add(BenhNhan bn)
         {
             DentalContextDB db1 = new DentalContextDB();

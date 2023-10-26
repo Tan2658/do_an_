@@ -80,6 +80,24 @@
     <Compile Include="ForgetPassword.Designer.cs">
       <DependentUpon>ForgetPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDangKy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDangKy.Designer.cs">
+      <DependentUpon>FormDangKy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormKho.Designer.cs">
+      <DependentUpon>FormKho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLichSuNhapXuat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLichSuNhapXuat.Designer.cs">
+      <DependentUpon>FormLichSuNhapXuat.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +121,15 @@
     </Compile>
     <EmbeddedResource Include="ForgetPassword.resx">
       <DependentUpon>ForgetPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDangKy.resx">
+      <DependentUpon>FormDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKho.resx">
+      <DependentUpon>FormKho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLichSuNhapXuat.resx">
+      <DependentUpon>FormLichSuNhapXuat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportView.resx">
       <DependentUpon>FormReportView.cs</DependentUpon>

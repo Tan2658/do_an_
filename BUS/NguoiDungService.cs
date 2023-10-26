@@ -28,11 +28,17 @@ namespace BUS
             return db.BacSi.OrderBy(p => p.Ten).ToList();
         }
 
-        public BacSi findByExperience(string experience)
+        public List<BacSi> GetBacSi()
         {
             DentalContextDB db = new DentalContextDB();
-            return db.BacSi.FirstOrDefault(p => p.KinhNghiem == experience);
+            return db.BacSi.Where(q => q.ChucVu == "Bác sĩ").ToList();
         }
+        public List<BacSi> GetNhanVien()
+        {
+            DentalContextDB db = new DentalContextDB();
+            return db.BacSi.Where(q => q.ChucVu == "Nhân viên").ToList();
+        }
+
         public BacSi findByName(string name)
         {
             DentalContextDB db = new DentalContextDB();

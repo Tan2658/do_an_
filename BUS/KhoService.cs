@@ -17,10 +17,25 @@ namespace BUS
             context.SaveChanges();
         }
 
+        public void CongDungCu(int sl, string id)
+        {
+
+            DentalContextDB context = new DentalContextDB();
+            Kho db = context.Kho.FirstOrDefault(q => q.IDDungCu == id);
+            db.SoLuong += sl;
+            context.SaveChanges();
+        }
+
         public Kho FindByIDDungCu(string id)
         {
             DentalContextDB context = new DentalContextDB();
             return context.Kho.FirstOrDefault(q => q.IDDungCu == id);
+        }
+
+        public List<Kho> GetAll()
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.Kho.ToList();
         }
     }
 }

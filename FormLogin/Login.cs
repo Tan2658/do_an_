@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Timers;
 using System.Web;
 using System.Windows.Forms;
 using DAL.Data;
+using BUS;
 
 namespace FormLogin
 {
@@ -18,23 +20,18 @@ namespace FormLogin
         System.Timers.Timer timer;
         int minute = 2, second;
 
-        DentalContextDB context = new DentalContextDB();
+        private readonly TaiKhoanService taikhoan = new TaiKhoanService();
+
         public formLogin()
         {
             InitializeComponent();
         }
         private void eventCountdown()
         {
-
             timer = new System.Timers.Timer();
             timer.Interval = 1000;
             timer.Elapsed += OnTimeEvent;
             timer.Start();
-        }
-
-        private void txtAccount_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void txtAccount_Click(object sender, EventArgs e)
@@ -97,22 +94,32 @@ namespace FormLogin
 
         private void pictureBox4_MouseDown(object sender, MouseEventArgs e)
         {
-            
-                string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\picture-show.png";
-                Image newImage = Image.FromFile(newImagePath);
+            string parentDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string imagePath = Path.Combine(parentDirectory, "Image", "picture-show.png");
+            Image image = Image.FromFile(imagePath);
+            pictureBox4.Image = image;
 
-                pictureBox4.Image = newImage;
+            //string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\picture-show.png";
+            //Image newImage = Image.FromFile(newImagePath);
 
-                txtPassword.UseSystemPasswordChar = false;     
+            //pictureBox4.Image = newImage;
+
+            txtPassword.UseSystemPasswordChar = false;     
         }
 
         private void pictureBox4_MouseUp(object sender, MouseEventArgs e)
         {
-            string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\noShowPas.png";
+            string parentDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string imagePath = Path.Combine(parentDirectory, "Image", "noShowPas.png");
+            Image image = Image.FromFile(imagePath);
+            pictureBox4.Image = image;
 
-            Image newImage = Image.FromFile(newImagePath);
+            //string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\noShowPas.png";
 
-            pictureBox4.Image = newImage;
+            //Image newImage = Image.FromFile(newImagePath);
+
+            //pictureBox4.Image = newImage;
+
             txtPassword.UseSystemPasswordChar = true;
         }
 
@@ -128,34 +135,39 @@ namespace FormLogin
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    timer.Stop();
-            //    List<TaiKhoan> ts  = context.TaiKhoans.ToList();
-            //   foreach(var item in ts)
-            //    {
-            //        if(txtAccount.Text == "" || txtPassword.Text == "")
-            //        {
-            //            MessageBox.Show("Yêu cầu nhập các fields đầy đủ !");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text == item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Nếu bạn quên mật khẩu thì click vào Forget Password ?");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text != item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Tài khoản và Mật khẩu bạn chưa tổn tại !!!");
-            //        }
-            //        else
-            //        {
+            try
+            {
+                timer.Stop();
+                List<TaiKhoan> ts = taikhoan.GetAll();
+                
+                if (txtAccount.Text == "" || txtPassword.Text == "")
+                {
+                    throw new Exception("Yêu cầu nhập các fields đầy đủ !");
+                }
 
-            //            MessageBox.Show("Đăng nhập thành công !");
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+                foreach (var item in ts)
+                {
+                    if (txtAccount.Text == item.TenDangNhap)
+                    {
+                        if (txtPassword.Text != item.MatKhau)
+                            throw new Exception("Mật khẩu không trùng khớp !");
+                        else
+                        {
+                            MessageBox.Show("Đăng nhập thành công !");
+                            FormTrangChu frm = new FormTrangChu();
+                            this.Hide();
+                            frm.ShowDialog();
+                            this.Close();
+                        }
+                    }
+                }
 
-            //    MessageBox.Show(ex.Message);
-            //}
+                throw new Exception("Tài khoản không tồn tại !");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnForget_Click(object sender, EventArgs e)
@@ -163,8 +175,9 @@ namespace FormLogin
             timer.Stop();
 
             ForgetPassword form = new ForgetPassword();
-            form.Show();
-            //this.Close();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
       
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -179,15 +192,23 @@ namespace FormLogin
 
         private void formLogin_Load(object sender, EventArgs e)
         {
-         
             eventCountdown();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+
+            FormDangKy form = new FormDangKy();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
 
         private void OnTimeEvent(object sender, ElapsedEventArgs e)
         {
             Invoke(new Action(() =>
             {
-              
                 second--;
                 if(second < 0 )
                 {

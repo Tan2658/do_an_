@@ -11,20 +11,23 @@ namespace BUS
 {
     public class TaiKhoanService
     {
-        //public List<TaiKhoan> GetAll()
-        //{
-        //    DentalContextDB context = new DentalContextDB();
-        //    return context.TaiKhoans.ToList();
-        //}
+        public List<TaiKhoan> GetAll()
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.TaiKhoan.ToList();
+        }
 
-
-   
         public void InsertUpdate(TaiKhoan s)
         {
-            //DentalContextDB context = new DentalContextDB();
-            //context.TaiKhoans.AddOrUpdate(s);
-            //context.SaveChanges();
+            DentalContextDB context = new DentalContextDB();
+            context.TaiKhoan.AddOrUpdate(s);
+            context.SaveChanges();
+        }
 
+        public TaiKhoan TimTenTaiKhoan(string ten)
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.TaiKhoan.FirstOrDefault(q => q.TenDangNhap == ten);
         }
     }
 }

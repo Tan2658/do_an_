@@ -37,8 +37,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnRegister = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtTimer = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnForget = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
@@ -51,7 +53,6 @@
             this.picAccount = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -107,7 +108,7 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(46, 275);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(239, 27);
+            this.label3.Size = new System.Drawing.Size(254, 30);
             this.label3.TabIndex = 3;
             this.label3.Text = "welcome you to our";
             // 
@@ -129,7 +130,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(123, 187);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(171, 21);
+            this.label1.Size = new System.Drawing.Size(173, 22);
             this.label1.TabIndex = 1;
             this.label1.Text = "With a smile of joy,";
             // 
@@ -145,9 +146,10 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.btnRegister);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.txtTimer);
-            this.panel2.Controls.Add(this.checkBox1);
             this.panel2.Controls.Add(this.btnForget);
             this.panel2.Controls.Add(this.btnLogin);
             this.panel2.Controls.Add(this.btnClose);
@@ -162,6 +164,40 @@
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.label7.Location = new System.Drawing.Point(16, 521);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(572, 23);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Don\'t have an account ? Click the button below to regist";
+            // 
+            // btnRegister
+            // 
+            this.btnRegister.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegister.ForeColor = System.Drawing.Color.White;
+            this.btnRegister.Location = new System.Drawing.Point(216, 551);
+            this.btnRegister.Name = "btnRegister";
+            this.btnRegister.Size = new System.Drawing.Size(170, 45);
+            this.btnRegister.TabIndex = 11;
+            this.btnRegister.Text = "Register";
+            this.btnRegister.UseVisualStyleBackColor = false;
+            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(419, 576);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 20);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Log Out:";
+            // 
             // txtTimer
             // 
             this.txtTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -171,17 +207,6 @@
             this.txtTimer.TabIndex = 7;
             this.txtTimer.Text = "02 : 00";
             this.txtTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(10, 411);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(172, 31);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Lưu mật khẩu";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // btnForget
             // 
@@ -289,7 +314,6 @@
             this.txtAccount.Size = new System.Drawing.Size(346, 29);
             this.txtAccount.TabIndex = 1;
             this.txtAccount.Click += new System.EventHandler(this.txtAccount_Click);
-            this.txtAccount.TextChanged += new System.EventHandler(this.txtAccount_TextChanged);
             // 
             // picAccount
             // 
@@ -317,16 +341,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(419, 576);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 20);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Log Out:";
             // 
             // formLogin
             // 
@@ -379,10 +393,11 @@
         private System.Windows.Forms.Button btnForget;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnRegister;
     }
 }
 

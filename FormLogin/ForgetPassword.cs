@@ -16,8 +16,7 @@ namespace FormLogin
 {
     public partial class ForgetPassword : Form
     {
-        private readonly TaiKhoanService ts = new TaiKhoanService();
-        DentalContextDB context = new DentalContextDB();
+        private readonly TaiKhoanService taikhoan = new TaiKhoanService();
         public ForgetPassword()
         {
             InitializeComponent();
@@ -38,7 +37,6 @@ namespace FormLogin
             if (txtUsername.Text == "" || txtNewPassword.Text == "")
             {
                 return false;
-
             }
            return true;
         }
@@ -50,28 +48,32 @@ namespace FormLogin
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-     
-            //try
-            //{
-            //    List<TaiKhoan> ts = context.TaiKhoans.ToList();
-            //    if (checkData())
-            //    {
-            //        TaiKhoan item = context.TaiKhoans.FirstOrDefault(p => p.TenDangNhap == txtUsername.Text);
-            //        item.MatKhau = txtNewPassword.Text;
-            //        context.SaveChanges();
-            //        clearContent();
-            //        MessageBox.Show("Cập nhật mật khẩu thành công", "Thông Báo", MessageBoxButtons.OK);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+            try
+            {
+                List<TaiKhoan> ts = taikhoan.GetAll();
+                if (!checkData())
+                    throw new Exception("Vui lòng nhập đủ thông tin");
+                else
+                {
+                    TaiKhoan item = taikhoan.TimTenTaiKhoan(txtUsername.Text);
 
-            //    MessageBox.Show(ex.Message);
-            //}
+                    if (item == null)
+                        throw new Exception("Không tồn tại tài khoản");
+
+                    item.MatKhau = txtNewPassword.Text;
+                    taikhoan.InsertUpdate(item);
+                    clearContent();
+                    MessageBox.Show("Cập nhật mật khẩu thành công", "Thông Báo", MessageBoxButtons.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void btnLog_Click(object sender, EventArgs e)
         {
-                this.Close();
+            this.Close();
         }
     }
 }
