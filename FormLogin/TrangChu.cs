@@ -131,11 +131,6 @@ namespace FormLogin
         {
             lblThongKe .Hide() ;
         }
-
-        private void tabControl1_Click(object sender, EventArgs e)
-        {
-           
-        }
         private void FillRegistered(List<BacSi> list)
         {
             dgvNguoiDung.Rows.Clear();

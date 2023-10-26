@@ -30,7 +30,7 @@ namespace FormLogin
         private void FormReportView_Load(object sender, EventArgs e)
         {
             var listBenhNhan = benhnhan.GetAll();
-            BacSi getBacSi = nguoidung.findByName("BS.Thanh Tùng");
+            BacSi getBacSi = nguoidung.findByName("Bác sĩ A");
             List<BacSi> formBacSi = new List<BacSi>();  
             List<BenhNhan> formReportViews = new List<BenhNhan>();
             foreach (var item in listBenhNhan)

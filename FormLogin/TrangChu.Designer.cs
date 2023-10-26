@@ -45,6 +45,9 @@
             this.tabNguoiDung = new System.Windows.Forms.TabPage();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.rdoBS = new System.Windows.Forms.RadioButton();
+            this.rdoNV = new System.Windows.Forms.RadioButton();
             this.btnLoad = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -103,6 +106,9 @@
             this.tabKhamBenh = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.dgvBenhNhanKham = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnTaoDieuTri = new System.Windows.Forms.Button();
@@ -231,12 +237,6 @@
             this.imageListTrangChu = new System.Windows.Forms.ImageList(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.rdoNV = new System.Windows.Forms.RadioButton();
-            this.rdoBS = new System.Windows.Forms.RadioButton();
-            this.label43 = new System.Windows.Forms.Label();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.tabTrangChu.SuspendLayout();
             this.tabNguoiDung.SuspendLayout();
@@ -280,7 +280,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1579, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1579, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -288,7 +288,7 @@
             // 
             this.menustripNguoiDung.Image = ((System.Drawing.Image)(resources.GetObject("menustripNguoiDung.Image")));
             this.menustripNguoiDung.Name = "menustripNguoiDung";
-            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 26);
+            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 24);
             this.menustripNguoiDung.Text = "Người Dùng";
             this.menustripNguoiDung.Click += new System.EventHandler(this.menustripNguoiDung_Click);
             this.menustripNguoiDung.MouseEnter += new System.EventHandler(this.menustripNguoiDung_MouseEnter);
@@ -408,7 +408,6 @@
             this.tabTrangChu.Size = new System.Drawing.Size(1579, 661);
             this.tabTrangChu.TabIndex = 18;
             this.tabTrangChu.Visible = false;
-            this.tabTrangChu.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tabNguoiDung
             // 
@@ -450,6 +449,39 @@
             this.groupBox2.Size = new System.Drawing.Size(459, 80);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(6, 12);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(116, 17);
+            this.label43.TabIndex = 4;
+            this.label43.Text = "Lọc theo chức vụ";
+            // 
+            // rdoBS
+            // 
+            this.rdoBS.AutoSize = true;
+            this.rdoBS.Location = new System.Drawing.Point(258, 40);
+            this.rdoBS.Name = "rdoBS";
+            this.rdoBS.Size = new System.Drawing.Size(67, 21);
+            this.rdoBS.TabIndex = 3;
+            this.rdoBS.TabStop = true;
+            this.rdoBS.Text = "Bác sĩ";
+            this.rdoBS.UseVisualStyleBackColor = true;
+            this.rdoBS.CheckedChanged += new System.EventHandler(this.rdoBS_CheckedChanged);
+            // 
+            // rdoNV
+            // 
+            this.rdoNV.AutoSize = true;
+            this.rdoNV.Location = new System.Drawing.Point(74, 40);
+            this.rdoNV.Name = "rdoNV";
+            this.rdoNV.Size = new System.Drawing.Size(93, 21);
+            this.rdoNV.TabIndex = 2;
+            this.rdoNV.TabStop = true;
+            this.rdoNV.Text = "Nhân viên";
+            this.rdoNV.UseVisualStyleBackColor = true;
+            this.rdoNV.CheckedChanged += new System.EventHandler(this.rdoNV_CheckedChanged);
             // 
             // btnLoad
             // 
@@ -1070,6 +1102,27 @@
             this.dgvBenhNhanKham.Size = new System.Drawing.Size(652, 531);
             this.dgvBenhNhanKham.TabIndex = 3;
             this.dgvBenhNhanKham.SelectionChanged += new System.EventHandler(this.dgvBenhNhanKham_SelectionChanged);
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "STT";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Ngày khám";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Họ tên";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // tabControl2
             // 
@@ -2357,60 +2410,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
-            // 
-            // rdoNV
-            // 
-            this.rdoNV.AutoSize = true;
-            this.rdoNV.Location = new System.Drawing.Point(74, 40);
-            this.rdoNV.Name = "rdoNV";
-            this.rdoNV.Size = new System.Drawing.Size(93, 21);
-            this.rdoNV.TabIndex = 2;
-            this.rdoNV.TabStop = true;
-            this.rdoNV.Text = "Nhân viên";
-            this.rdoNV.UseVisualStyleBackColor = true;
-            this.rdoNV.CheckedChanged += new System.EventHandler(this.rdoNV_CheckedChanged);
-            // 
-            // rdoBS
-            // 
-            this.rdoBS.AutoSize = true;
-            this.rdoBS.Location = new System.Drawing.Point(258, 40);
-            this.rdoBS.Name = "rdoBS";
-            this.rdoBS.Size = new System.Drawing.Size(67, 21);
-            this.rdoBS.TabIndex = 3;
-            this.rdoBS.TabStop = true;
-            this.rdoBS.Text = "Bác sĩ";
-            this.rdoBS.UseVisualStyleBackColor = true;
-            this.rdoBS.CheckedChanged += new System.EventHandler(this.rdoBS_CheckedChanged);
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(6, 12);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(116, 17);
-            this.label43.TabIndex = 4;
-            this.label43.Text = "Lọc theo chức vụ";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "STT";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Ngày khám";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Họ tên";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // FormTrangChu
             // 
