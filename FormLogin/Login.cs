@@ -95,26 +95,7 @@ namespace FormLogin
             eventCountdown();
         }
 
-        private void pictureBox4_MouseDown(object sender, MouseEventArgs e)
-        {
-            
-                string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\picture-show.png";
-                Image newImage = Image.FromFile(newImagePath);
-
-                pictureBox4.Image = newImage;
-
-                txtPassword.UseSystemPasswordChar = false;     
-        }
-
-        private void pictureBox4_MouseUp(object sender, MouseEventArgs e)
-        {
-            string newImagePath = "C:\\Users\\Admin\\source\\repos\\DA Nha Khoa\\FormLogin\\Resources\\noShowPas.png";
-
-            Image newImage = Image.FromFile(newImagePath);
-
-            pictureBox4.Image = newImage;
-            txtPassword.UseSystemPasswordChar = true;
-        }
+        
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -132,7 +113,6 @@ namespace FormLogin
             {
                 timer.Stop();
                 List<TaiKhoan> ts = context.TaiKhoans.ToList();
-
                 foreach (var item in ts)
                 {
                     if (txtAccount.Text == "" || txtPassword.Text == "")
@@ -152,13 +132,13 @@ namespace FormLogin
                     {
 
                         MessageBox.Show("Đăng nhập thành công !");
+                        FormTrangChu frm = new FormTrangChu(this);
+                        this.Hide();
+                        frm.ShowDialog();
+                        this.Close();
                     }
-                  
+
                 }
-                FormTrangChu frm = new FormTrangChu(this);
-                this.Hide();
-                frm.ShowDialog();
-                this.Close();
             }
             catch (Exception ex)
             {
@@ -265,6 +245,19 @@ namespace FormLogin
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormDangKy frm=new FormDangKy(this);
+            this.Hide();
+            frm.ShowDialog();
+            this.Close();
+        }
+
+        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
+        {
+            txtPassword.UseSystemPasswordChar = !checkBox2.Checked;
         }
 
         private void OnTimeEvent(object sender, ElapsedEventArgs e)

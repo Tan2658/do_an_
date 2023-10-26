@@ -13,9 +13,15 @@ namespace FormLogin
 {
     public partial class FormDangKy : Form
     {
+        formLogin frm;
         public FormDangKy()
         {
             InitializeComponent();
+        }
+        public FormDangKy(formLogin frm)
+        {
+            InitializeComponent();
+            this.frm = frm;
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
@@ -37,9 +43,9 @@ namespace FormLogin
                 List<TaiKhoan> ts = context.TaiKhoans.ToList();
                 foreach (var item in ts)
                 {
-                    if (txtPassword.Text != item.MatKhau && txtAccount.Text != item.TenDangNhap)
+                    if (txtPassword.Text == item.MatKhau && txtAccount.Text == item.TenDangNhap)
                     {
-                        MessageBox.Show("Tài khoản và Mật khẩu bạn chưa tổn tại !!!");
+                        MessageBox.Show("Tài khoản và Mật khẩu bạn đã tổn tại !!!");
                     }
                 }
                 if (txtAccount.Text == "" || txtPassword.Text == "")
@@ -65,8 +71,6 @@ namespace FormLogin
                     frm.ShowDialog();
                     this.Close();
                 }
-                  
-                
             }
             catch (Exception ex)
             {

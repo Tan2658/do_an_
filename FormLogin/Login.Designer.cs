@@ -51,7 +51,9 @@
             this.picAccount = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -60,7 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLock)).BeginInit();
             this.panelAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAccount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -152,6 +153,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.txtTimer);
             this.panel2.Controls.Add(this.checkBox1);
@@ -208,7 +211,7 @@
             this.btnForget.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnForget.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnForget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnForget.Location = new System.Drawing.Point(199, 464);
+            this.btnForget.Location = new System.Drawing.Point(423, 464);
             this.btnForget.Name = "btnForget";
             this.btnForget.Size = new System.Drawing.Size(150, 45);
             this.btnForget.TabIndex = 5;
@@ -244,7 +247,7 @@
             // 
             // panelPas
             // 
-            this.panelPas.Controls.Add(this.pictureBox4);
+            this.panelPas.Controls.Add(this.checkBox2);
             this.panelPas.Controls.Add(this.txtPassword);
             this.panelPas.Controls.Add(this.picLock);
             this.panelPas.Location = new System.Drawing.Point(0, 324);
@@ -330,17 +333,40 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // pictureBox4
+            // button1
             // 
-            this.pictureBox4.Image = global::FormLogin.Properties.Resources.noShowPas;
-            this.pictureBox4.Location = new System.Drawing.Point(538, 22);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(37, 30);
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
-            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseDown);
-            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseUp);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(230, 555);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(170, 45);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Register";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.label7.Location = new System.Drawing.Point(16, 523);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(572, 23);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Don\'t have an account ? Click the button below to regist";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Image = global::FormLogin.Properties.Resources.noShowPas;
+            this.checkBox2.Location = new System.Drawing.Point(507, 23);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(58, 30);
+            this.checkBox2.TabIndex = 4;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged_1);
             // 
             // formLogin
             // 
@@ -367,7 +393,6 @@
             this.panelAccount.ResumeLayout(false);
             this.panelAccount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAccount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -396,7 +421,9 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

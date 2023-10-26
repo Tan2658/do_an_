@@ -11,19 +11,19 @@ namespace BUS
 {
     public class TaiKhoanService
     {
-        //public List<TaiKhoan> GetAll()
-        //{
-        //    DentalContextDB context = new DentalContextDB();
-        //    return context.TaiKhoans.ToList();
-        //}
+        public List<TaiKhoan> GetAll()
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.TaiKhoans.ToList();
+        }
 
 
-   
+
         public void InsertUpdate(TaiKhoan s)
         {
-            //DentalContextDB context = new DentalContextDB();
-            //context.TaiKhoans.AddOrUpdate(s);
-            //context.SaveChanges();
+            DentalContextDB context = new DentalContextDB();
+            context.TaiKhoans.AddOrUpdate(s);
+            context.SaveChanges();
 
         }
     }

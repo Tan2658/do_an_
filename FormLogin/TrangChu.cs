@@ -833,6 +833,20 @@ namespace FormLogin
                 }
             }
         }
+        private void BindGridDoanhThu(List<HoaDon> Bill)
+        {
+            dgvDoanhThu.Rows.Clear();
+            foreach (var item in Bill)
+            {
+                int index = dgvThongKeVT.Rows.Add();
+                dgvDoanhThu.Rows[index].Cells[0].Value = item.IDHoaDon.ToString();
+                dgvDoanhThu.Rows[index].Cells[1].Value = item.DanhSachKham.BenhNhan.HoTen.ToString();
+                dgvDoanhThu.Rows[index].Cells[2].Value = item.PhuongThucThanhToan.ToString();
+                dgvDoanhThu.Rows[index].Cells[3].Value = item.TongTien.ToString();
+                dgvDoanhThu.Rows[index].Cells[4].Value = item.NgayLap.ToString();
+
+            }
+        }
 
         private void tabTK_Enter(object sender, EventArgs e)
         {
@@ -842,8 +856,16 @@ namespace FormLogin
             dtpYear.Format = DateTimePickerFormat.Custom;
             dtpQuy.CustomFormat = "yyyy";
             dtpQuy.Format = DateTimePickerFormat.Custom;
+            dtpMonthDT.CustomFormat = "MM/yyyy";
+            dtpMonthDT.Format = DateTimePickerFormat.Custom;
+            dtpYearDT.CustomFormat = "yyyy";
+            dtpYearDT.Format = DateTimePickerFormat.Custom;
+            dtpQuiDT.CustomFormat = "yyyy";
+            dtpQuiDT.Format = DateTimePickerFormat.Custom;
             List<LichSuNhapXuat> listStatic = context.LichSuNhapXuats.ToList();
             BindGridTK(listStatic);
+            List<HoaDon> listBill = context.HoaDons.ToList();
+            BindGridDoanhThu(listBill);
         }
 
         private void BindGridTK(List<LichSuNhapXuat> Statics)
@@ -968,7 +990,7 @@ namespace FormLogin
                 }
                 else
                 {
-                    MessageBox.Show("Ban can phai chon nut thong kẻ");
+                    MessageBox.Show("Ban can phai chon nut thong kê");
                     break;
                 }
             }
@@ -1036,6 +1058,54 @@ namespace FormLogin
                 }
             }
         }
- 
+
+        private void btnTKDoanhThu_Click(object sender, EventArgs e)
+        {
+            decimal TienTong = 0;
+            for (int i = 0; i < dgvDoanhThu.Rows.Count; i++)
+            {
+                if (rdoMonthDT.Checked)
+                {
+                    if (dtpMonthDT.Value.Month.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Month.ToString()
+                        && dtpYearDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
+                    {
+                       
+                        TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
+                        txtTongDT.Text = TienTong.ToString();
+                    }
+                }
+                else if (rdoYearDT.Checked)
+                {
+
+                    if (dtpYearDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
+                    {
+
+                        TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
+                        txtTongDT.Text = TienTong.ToString();
+                    }
+                }
+                else if (rdoQuiDT.Checked)
+                {
+                    if (dtpQuiDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
+                    {
+                        int quy = cboQuiDT.SelectedIndex;
+                        int transactionQuarter =
+                              (int.Parse(DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Month.ToString()) - 1) / 3;
+                        if (transactionQuarter == quy)
+                        {
+                            TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
+                            txtTongDT.Text = TienTong.ToString();
+                            txtTongDT.Text = TienTong.ToString();
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ban can phai chon nut thong kê");
+                    break;
+                }
+            }
+        }
     }
 }
