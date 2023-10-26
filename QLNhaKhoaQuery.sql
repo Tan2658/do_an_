@@ -1,4 +1,4 @@
-﻿use QLSX
+use master
 
 drop database QLNhaKhoa
 
@@ -127,7 +127,9 @@ create table TaiKhoan
 )
 insert into TaiKhoan
 values ('admin', 'admin'),
-	   ('admin1', 'admin1')
+	   ('admin1', 'admin1'),
+	   ('admin2', 'admin2'),
+	   ('admin3', 'admin3')
 	
 if exists (select * from sys.objects where name ='BacSi')
 	drop table BacSi
@@ -145,8 +147,11 @@ create table BacSi
 	constraint chk_TenDangNhap_BacSi foreign key (TenDangNhap) references TaiKhoan(TenDangNhap)
 )
 insert into BacSi
-values ('BS1', 'admin', N'Bác sĩ A', N'Bác sĩ', '', '', ''),
-	   ('NV2', 'admin1', N'Nhân viên A', N'Nhân viên', '', '', '')
+values ('NV1', 'admin1', N'Nhân viên A', N'Nhân viên', '', '', ''),
+		('BS1', 'admin', N'Bác sĩ A', N'Bác sĩ', '', '', ''),
+		('BS2', 'admin2', N'Bác sĩ B', N'Bác sĩ', '', '', ''),
+		('NV2', 'admin3', N'Nhân viên B', N'Nhân viên', '', '', '')
+	   
 
 if exists (select * from sys.objects where name ='BenhNhan')
 	drop table BenhNhan
