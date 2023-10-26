@@ -37,13 +37,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnForget = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.panelPas = new System.Windows.Forms.Panel();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.picLock = new System.Windows.Forms.PictureBox();
             this.panelAccount = new System.Windows.Forms.Panel();
@@ -51,16 +51,16 @@
             this.picAccount = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panelPas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLock)).BeginInit();
             this.panelAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAccount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -77,6 +77,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(300, 600);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // pictureBox2
             // 
@@ -87,6 +88,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // label4
             // 
@@ -99,6 +101,7 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Dental Clinic\r\nSystem";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -110,6 +113,7 @@
             this.label3.Size = new System.Drawing.Size(239, 27);
             this.label3.TabIndex = 3;
             this.label3.Text = "welcome you to our";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 
@@ -121,6 +125,7 @@
             this.label2.Size = new System.Drawing.Size(120, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "we warmly";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -132,16 +137,18 @@
             this.label1.Size = new System.Drawing.Size(171, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "With a smile of joy,";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::FormLogin.Properties.Resources.picture_11;
-            this.pictureBox1.Location = new System.Drawing.Point(90, 26);
+            this.pictureBox1.Location = new System.Drawing.Point(89, 25);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(120, 120);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // panel2
             // 
@@ -162,6 +169,17 @@
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(419, 576);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 20);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Log Out:";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // txtTimer
             // 
             this.txtTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -171,6 +189,7 @@
             this.txtTimer.TabIndex = 7;
             this.txtTimer.Text = "02 : 00";
             this.txtTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtTimer.TextChanged += new System.EventHandler(this.txtTimer_TextChanged);
             // 
             // checkBox1
             // 
@@ -182,6 +201,7 @@
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Lưu mật khẩu";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // btnForget
             // 
@@ -231,17 +251,7 @@
             this.panelPas.Name = "panelPas";
             this.panelPas.Size = new System.Drawing.Size(588, 70);
             this.panelPas.TabIndex = 2;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::FormLogin.Properties.Resources.noShowPas;
-            this.pictureBox4.Location = new System.Drawing.Point(538, 22);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(37, 30);
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseDown);
-            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseUp);
+            this.panelPas.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPas_Paint);
             // 
             // txtPassword
             // 
@@ -278,6 +288,7 @@
             this.panelAccount.Name = "panelAccount";
             this.panelAccount.Size = new System.Drawing.Size(588, 70);
             this.panelAccount.TabIndex = 1;
+            this.panelAccount.Paint += new System.Windows.Forms.PaintEventHandler(this.panelAccount_Paint);
             // 
             // txtAccount
             // 
@@ -312,21 +323,24 @@
             this.label5.Size = new System.Drawing.Size(449, 49);
             this.label5.TabIndex = 0;
             this.label5.Text = "Login to your account";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // timer1
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label6
+            // pictureBox4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(419, 576);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 20);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Log Out:";
+            this.pictureBox4.Image = global::FormLogin.Properties.Resources.noShowPas;
+            this.pictureBox4.Location = new System.Drawing.Point(538, 22);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(37, 30);
+            this.pictureBox4.TabIndex = 2;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseDown);
+            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseUp);
             // 
             // formLogin
             // 
@@ -349,11 +363,11 @@
             this.panel2.PerformLayout();
             this.panelPas.ResumeLayout(false);
             this.panelPas.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLock)).EndInit();
             this.panelAccount.ResumeLayout(false);
             this.panelAccount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAccount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -375,7 +389,6 @@
         private System.Windows.Forms.PictureBox picLock;
         private System.Windows.Forms.TextBox txtAccount;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button btnForget;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.PictureBox pictureBox2;
@@ -383,6 +396,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
 

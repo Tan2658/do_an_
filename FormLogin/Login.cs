@@ -128,34 +128,43 @@ namespace FormLogin
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    timer.Stop();
-            //    List<TaiKhoan> ts  = context.TaiKhoans.ToList();
-            //   foreach(var item in ts)
-            //    {
-            //        if(txtAccount.Text == "" || txtPassword.Text == "")
-            //        {
-            //            MessageBox.Show("Yêu cầu nhập các fields đầy đủ !");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text == item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Nếu bạn quên mật khẩu thì click vào Forget Password ?");
-            //        }else if(txtPassword.Text != item.MatKhau && txtAccount.Text != item.TenDangNhap)
-            //        {
-            //            MessageBox.Show("Tài khoản và Mật khẩu bạn chưa tổn tại !!!");
-            //        }
-            //        else
-            //        {
+            try
+            {
+                timer.Stop();
+                List<TaiKhoan> ts = context.TaiKhoans.ToList();
 
-            //            MessageBox.Show("Đăng nhập thành công !");
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+                foreach (var item in ts)
+                {
+                    if (txtAccount.Text == "" || txtPassword.Text == "")
+                    {
+                        MessageBox.Show("Yêu cầu nhập các fields đầy đủ !");
+                    }
+                    else if (txtPassword.Text != item.MatKhau && txtAccount.Text == item.TenDangNhap)
+                    {
+                        MessageBox.Show("Nếu bạn quên mật khẩu thì click vào Forget Password ?");
+                    }
+                    else if (txtPassword.Text != item.MatKhau && txtAccount.Text != item.TenDangNhap)
+                    {
+                        MessageBox.Show("Tài khoản và Mật khẩu bạn chưa tổn tại !!!");
+                        break;
+                    }
+                    else
+                    {
 
-            //    MessageBox.Show(ex.Message);
-            //}
+                        MessageBox.Show("Đăng nhập thành công !");
+                    }
+                  
+                }
+                FormTrangChu frm = new FormTrangChu(this);
+                this.Hide();
+                frm.ShowDialog();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnForget_Click(object sender, EventArgs e)
@@ -181,6 +190,81 @@ namespace FormLogin
         {
          
             eventCountdown();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTimer_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelPas_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelAccount_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void OnTimeEvent(object sender, ElapsedEventArgs e)

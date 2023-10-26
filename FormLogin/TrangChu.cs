@@ -28,11 +28,23 @@ namespace FormLogin
         private readonly VatTuService ms= new VatTuService();
         ReportDataSource rp = new ReportDataSource();
         DentalContextDB context = new DentalContextDB();
+        FormDangKy frm;
+        formLogin frm1;
+
         public FormTrangChu()
         {
             InitializeComponent();
         }
-
+        public FormTrangChu(FormDangKy frm)
+        {
+            InitializeComponent();
+            this.frm = frm;
+        }
+        public FormTrangChu(formLogin frm1)
+        {
+            InitializeComponent();
+            this.frm1 = frm1;
+        }
         private void khámBệnhToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabTrangChu.Visible = true;
