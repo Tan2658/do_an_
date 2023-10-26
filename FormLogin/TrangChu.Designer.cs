@@ -280,7 +280,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1579, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1579, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -288,7 +288,7 @@
             // 
             this.menustripNguoiDung.Image = ((System.Drawing.Image)(resources.GetObject("menustripNguoiDung.Image")));
             this.menustripNguoiDung.Name = "menustripNguoiDung";
-            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 24);
+            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 26);
             this.menustripNguoiDung.Text = "Người Dùng";
             this.menustripNguoiDung.Click += new System.EventHandler(this.menustripNguoiDung_Click);
             this.menustripNguoiDung.MouseEnter += new System.EventHandler(this.menustripNguoiDung_MouseEnter);
@@ -510,8 +510,7 @@
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.label9.Location = new System.Drawing.Point(481, 18);
             this.label9.Name = "label9";
@@ -676,7 +675,7 @@
             this.groupBox5.Size = new System.Drawing.Size(848, 492);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Danh sách đăng ký khám";
+            this.groupBox5.Text = "Danh sách đăng ký khám trong ngày";
             // 
             // dgvBenhNhanDangKi
             // 
@@ -980,9 +979,9 @@
             this.cbTimKiemBN.Location = new System.Drawing.Point(12, 150);
             this.cbTimKiemBN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbTimKiemBN.Name = "cbTimKiemBN";
-            this.cbTimKiemBN.Size = new System.Drawing.Size(200, 21);
+            this.cbTimKiemBN.Size = new System.Drawing.Size(181, 21);
             this.cbTimKiemBN.TabIndex = 11;
-            this.cbTimKiemBN.Text = "Tìm BN theo ngày tái khám";
+            this.cbTimKiemBN.Text = "Tìm BN theo ngày khám";
             this.cbTimKiemBN.UseVisualStyleBackColor = true;
             // 
             // radioFemale
@@ -1900,7 +1899,7 @@
             // 
             // txtTongDT
             // 
-            this.txtTongDT.Location = new System.Drawing.Point(1347, 412);
+            this.txtTongDT.Location = new System.Drawing.Point(1357, 412);
             this.txtTongDT.Name = "txtTongDT";
             this.txtTongDT.Size = new System.Drawing.Size(115, 22);
             this.txtTongDT.TabIndex = 130;
@@ -2054,7 +2053,7 @@
             // 
             this.label39.AutoSize = true;
             this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label39.Location = new System.Drawing.Point(1475, 105);
+            this.label39.Location = new System.Drawing.Point(1485, 105);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(50, 24);
             this.label39.TabIndex = 119;
@@ -2072,7 +2071,7 @@
             // 
             // txtDoanh
             // 
-            this.txtDoanh.Location = new System.Drawing.Point(1347, 103);
+            this.txtDoanh.Location = new System.Drawing.Point(1357, 103);
             this.txtDoanh.Name = "txtDoanh";
             this.txtDoanh.Size = new System.Drawing.Size(115, 22);
             this.txtDoanh.TabIndex = 117;
@@ -2442,7 +2441,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNguoiDung)).EndInit();
             this.tabTiepNhan.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
