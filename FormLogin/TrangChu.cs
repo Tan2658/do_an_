@@ -32,7 +32,8 @@ namespace FormLogin
         private readonly VatTuService ms = new VatTuService();
         private readonly ThiTruongService thitruong = new ThiTruongService();
         private readonly HoaDonService hoadon = new HoaDonService();
-        
+        private readonly ThuocService thuoc = new ThuocService();
+
         public FormTrangChu()
         {
             InitializeComponent();
@@ -1158,5 +1159,107 @@ namespace FormLogin
                 FillRegistered(bacSis);
             }
         }
+
+        private void btnLuuThuoc_Click(object sender, EventArgs e)
+        {
+            string idkham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+
+            List<DonThuoc> donthuocs = thuoc.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
+
+            if (donthuocs == null)
+            {
+                for (int i = 0; i < dgvThuoc.Rows.Count; i++)
+                {
+                    if (int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()) > 0)
+                    {
+                        DonThuoc dt = new DonThuoc()
+                        {
+                            IDDonThuoc = txtMaThuoc.Text,
+                            IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                            TongTien = int.Parse(txtTongThuoc.Text),
+                            NgayLapDT = dtpDonThuoc.Value
+                        };
+                        thuoc.AddUpdate(dt);
+                        int sl = int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString());
+                        kho.TruDungCu(int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()), "DC01");
+
+                        Kho kh = kho.FindByIDDungCu("DC01");
+
+                        LichSuNhapXuat ls = new LichSuNhapXuat()
+                        {
+                            NoiDung = false,
+                            IDDungCu = kh.IDDungCu,
+                            TenDungCu = kh.TenDungCu,
+                            Loai = kh.Loai,
+                            DonViTinh = kh.DonViTinh,
+                            SoLuongNhapXuat = sl,
+                            Don = kh.ThiTruong.DonGia,
+                            ThanhTien = sl * kh.ThiTruong.DonGia,
+                            NgayNhap = dskham.TimTheoIDKham(idkham).NgayKham
+                        };
+
+                        lichsu.AddEntry(ls);
+                    }
+                }
+                MessageBox.Show("Lưu thông tin khám và thông tin điều trị thành công!");
+            }
+            MessageBox.Show("Lưu thông tin khám thành công!");
+        }
+        private void BindGridThuoc()
+        {
+            string name = "Thuốc";
+            List<Kho> thuocs = thuoc.GetAllMedicine(name);
+            dgvThuoc.Rows.Clear();
+
+            foreach (var item in thuocs)
+            {
+                int index = dgvThuoc.Rows.Add();
+
+                dgvThuoc.Rows[index].Cells[0].Value = item.IDDungCu;
+                dgvThuoc.Rows[index].Cells[1].Value = item.TenDungCu;
+                dgvThuoc.Rows[index].Cells[2].Value = item.DonViTinh;
+                dgvThuoc.Rows[index].Cells[3].Value = item.ThiTruong.DonGia.ToString();
+                dgvThuoc.Rows[index].Cells[4].Value = "0";
+                dgvThuoc.Rows[index].Cells[5].Value = "0";
+            }
+        }
+        private void btnKe_Click(object sender, EventArgs e)
+        {
+            BindGridThuoc();
+        }
+
+        private void dgvThuoc_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                float sum = 0;
+
+                for (int i = 0; i < dgvThuoc.Rows.Count; i++)
+                {
+                    if (dgvThuoc.Rows[i].Cells[5].Value != null)
+                    {
+                        dgvThuoc.Rows[i].Cells[5].Value =
+                            (float.Parse(dgvThuoc.Rows[i].Cells[3].Value.ToString())
+                            * float.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString())).ToString();
+
+                        sum += float.Parse(dgvThuoc.Rows[i].Cells[5].Value.ToString());
+                    }
+                }
+
+                txtTongThuoc.Text = sum.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tabThuoc_Enter(object sender, EventArgs e)
+        {
+            dtpDonThuoc.CustomFormat = "MM/yyyy";
+            dtpDonThuoc.Format = DateTimePickerFormat.Custom;
+            txtMaBNThuoc.Text = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+        }
+
     }
 }

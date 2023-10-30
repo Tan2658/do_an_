@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NguoiDungService.cs" />
     <Compile Include="ThiTruongService.cs" />
+    <Compile Include="ThuocService.cs" />
     <Compile Include="VatTuService.cs" />
   </ItemGroup>
   <ItemGroup>
