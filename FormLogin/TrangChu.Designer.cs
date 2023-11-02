@@ -300,7 +300,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1579, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1579, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -308,7 +308,7 @@
             // 
             this.menustripNguoiDung.Image = ((System.Drawing.Image)(resources.GetObject("menustripNguoiDung.Image")));
             this.menustripNguoiDung.Name = "menustripNguoiDung";
-            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 24);
+            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 26);
             this.menustripNguoiDung.Text = "Người Dùng";
             this.menustripNguoiDung.Click += new System.EventHandler(this.menustripNguoiDung_Click);
             this.menustripNguoiDung.MouseEnter += new System.EventHandler(this.menustripNguoiDung_MouseEnter);
@@ -318,7 +318,7 @@
             // 
             this.menustripTiepNhan.Image = ((System.Drawing.Image)(resources.GetObject("menustripTiepNhan.Image")));
             this.menustripTiepNhan.Name = "menustripTiepNhan";
-            this.menustripTiepNhan.Size = new System.Drawing.Size(111, 24);
+            this.menustripTiepNhan.Size = new System.Drawing.Size(111, 26);
             this.menustripTiepNhan.Text = "Tiếp Nhận";
             this.menustripTiepNhan.Click += new System.EventHandler(this.khámBệnhToolStripMenuItem_Click);
             this.menustripTiepNhan.MouseEnter += new System.EventHandler(this.menustripTiepNhan_MouseEnter);
@@ -328,7 +328,7 @@
             // 
             this.menustripKhamBenh.Image = ((System.Drawing.Image)(resources.GetObject("menustripKhamBenh.Image")));
             this.menustripKhamBenh.Name = "menustripKhamBenh";
-            this.menustripKhamBenh.Size = new System.Drawing.Size(118, 24);
+            this.menustripKhamBenh.Size = new System.Drawing.Size(118, 26);
             this.menustripKhamBenh.Text = "Khám Bệnh";
             this.menustripKhamBenh.Click += new System.EventHandler(this.menustripKhamBenh_Click);
             this.menustripKhamBenh.MouseEnter += new System.EventHandler(this.menustripKhamBenh_MouseEnter);
@@ -338,7 +338,7 @@
             // 
             this.menustripThuoc.Image = ((System.Drawing.Image)(resources.GetObject("menustripThuoc.Image")));
             this.menustripThuoc.Name = "menustripThuoc";
-            this.menustripThuoc.Size = new System.Drawing.Size(121, 24);
+            this.menustripThuoc.Size = new System.Drawing.Size(121, 26);
             this.menustripThuoc.Text = "Dược vật tư";
             this.menustripThuoc.Click += new System.EventHandler(this.menustripThuoc_Click);
             this.menustripThuoc.MouseEnter += new System.EventHandler(this.menustripThuoc_MouseEnter);
@@ -348,7 +348,7 @@
             // 
             this.menustripThongKe.Image = ((System.Drawing.Image)(resources.GetObject("menustripThongKe.Image")));
             this.menustripThongKe.Name = "menustripThongKe";
-            this.menustripThongKe.Size = new System.Drawing.Size(106, 24);
+            this.menustripThongKe.Size = new System.Drawing.Size(106, 26);
             this.menustripThongKe.Text = "Thống Kê";
             this.menustripThongKe.Click += new System.EventHandler(this.menustripThongKe_Click);
             this.menustripThongKe.MouseEnter += new System.EventHandler(this.menustripThongKe_MouseEnter);
@@ -717,6 +717,7 @@
             this.dgvBenhNhanDangKi.Size = new System.Drawing.Size(845, 465);
             this.dgvBenhNhanDangKi.TabIndex = 0;
             this.dgvBenhNhanDangKi.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBenhNhanDangKi_CellClick);
+            
             // 
             // Column7
             // 

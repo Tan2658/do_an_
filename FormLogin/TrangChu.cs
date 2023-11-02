@@ -402,7 +402,7 @@ namespace FormLogin
 
         private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowCount = dgvBenhNhanDangKi.RowCount;
+            int rowCount = dgvBenhNhanDangKi.RowCount+1;
             string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
             if (col == "ColDKBN")
             {
@@ -637,14 +637,12 @@ namespace FormLogin
 
             canlamsang.AddUpdate(cls);
 
-            List<DieuTri> dieuTris = dieutri.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
             
-            if (dieuTris == null)
-            {
                 for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
                 {
                     if (int.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString()) > 0)
                     {
+                    string MaDC = dgvDieuTri.Rows[i].Cells[0].Value.ToString();
                         DieuTri dt = new DieuTri()
                         {
                             IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
@@ -673,9 +671,7 @@ namespace FormLogin
                         };
 
                         lichsu.AddEntry(ls);
-                    }
                 }
-                MessageBox.Show("Lưu thông tin khám và thông tin điều trị thành công!");
             }
             MessageBox.Show("Lưu thông tin khám thành công!");
         }
@@ -1164,46 +1160,42 @@ namespace FormLogin
         {
             string idkham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
 
-            List<DonThuoc> donthuocs = thuoc.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
-
-            if (donthuocs == null)
+            for (int i = 0; i < dgvThuoc.Rows.Count; i++)
             {
-                for (int i = 0; i < dgvThuoc.Rows.Count; i++)
+                if (int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()) > 0)
                 {
-                    if (int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()) > 0)
+                    string MaDC = dgvThuoc.Rows[i].Cells[0].Value.ToString();
+                    DonThuoc dt = new DonThuoc()
                     {
-                        DonThuoc dt = new DonThuoc()
-                        {
-                            IDDonThuoc = txtMaThuoc.Text,
-                            IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
-                            TongTien = int.Parse(txtTongThuoc.Text),
-                            NgayLapDT = dtpDonThuoc.Value
-                        };
-                        thuoc.AddUpdate(dt);
-                        int sl = int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString());
-                        kho.TruDungCu(int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()), "DC01");
+                        IDDonThuoc = txtMaThuoc.Text,
+                        IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                        TongTien = int.Parse(txtTongThuoc.Text),
+                        NgayLapDT = dtpDonThuoc.Value
+                    };
+                    thuoc.AddUpdate(dt);
+                    int sl = int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString());
+                    kho.TruDungCu(int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()), MaDC);
 
-                        Kho kh = kho.FindByIDDungCu("DC01");
+                    Kho kh = kho.FindByIDDungCu(MaDC);
 
-                        LichSuNhapXuat ls = new LichSuNhapXuat()
-                        {
-                            NoiDung = false,
-                            IDDungCu = kh.IDDungCu,
-                            TenDungCu = kh.TenDungCu,
-                            Loai = kh.Loai,
-                            DonViTinh = kh.DonViTinh,
-                            SoLuongNhapXuat = sl,
-                            Don = kh.ThiTruong.DonGia,
-                            ThanhTien = sl * kh.ThiTruong.DonGia,
-                            NgayNhap = dskham.TimTheoIDKham(idkham).NgayKham
-                        };
+                    LichSuNhapXuat ls = new LichSuNhapXuat()
+                    {
+                        NoiDung = false,
+                        IDDungCu = kh.IDDungCu,
+                        TenDungCu = kh.TenDungCu,
+                        Loai = kh.Loai,
+                        DonViTinh = kh.DonViTinh,
+                        SoLuongNhapXuat = sl,
+                        Don = kh.ThiTruong.DonGia,
+                        ThanhTien = sl * kh.ThiTruong.DonGia,
+                        NgayNhap = dskham.TimTheoIDKham(idkham).NgayKham
+                    };
 
-                        lichsu.AddEntry(ls);
-                    }
+                    lichsu.AddEntry(ls);
                 }
-                MessageBox.Show("Lưu thông tin khám và thông tin điều trị thành công!");
+ 
             }
-            MessageBox.Show("Lưu thông tin khám thành công!");
+            MessageBox.Show("Lưu thông tin thuốc thành công!");
         }
         private void BindGridThuoc()
         {
@@ -1261,5 +1253,6 @@ namespace FormLogin
             txtMaBNThuoc.Text = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
         }
 
+        
     }
 }
