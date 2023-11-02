@@ -503,7 +503,8 @@ namespace FormLogin
                 int index = dgvBenhNhanKham.Rows.Add();
                 dgvBenhNhanKham.Rows[index].Cells[0].Value = item.IDKham;
                 dgvBenhNhanKham.Rows[index].Cells[1].Value = item.NgayKham;
-                dgvBenhNhanKham.Rows[index].Cells[2].Value = item.BenhNhan.HoTen;
+                dgvBenhNhanKham.Rows[index].Cells["Column14"].Value = item.BenhNhan.IDBenhNhan;
+                dgvBenhNhanKham.Rows[index].Cells[3].Value = item.BenhNhan.HoTen;
             }
         }
 
@@ -1260,9 +1261,9 @@ namespace FormLogin
 
         private void tabThuoc_Enter(object sender, EventArgs e)
         {
-            dtpDonThuoc.CustomFormat = "MM/yyyy";
+            dtpDonThuoc.CustomFormat = "dd/MM/yyyy";
             dtpDonThuoc.Format = DateTimePickerFormat.Custom;
-            txtMaBNThuoc.Text = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+            txtMaBNThuoc.Text = dgvBenhNhanKham.SelectedRows[0].Cells["Column14"].Value.ToString();
         }
 
         
