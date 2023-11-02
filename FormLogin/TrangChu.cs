@@ -33,6 +33,7 @@ namespace FormLogin
         private readonly ThiTruongService thitruong = new ThiTruongService();
         private readonly HoaDonService hoadon = new HoaDonService();
         private readonly ThuocService thuoc = new ThuocService();
+        private readonly CTDTService CTDT = new CTDTService();
 
         public FormTrangChu()
         {
@@ -1192,6 +1193,17 @@ namespace FormLogin
                     };
 
                     lichsu.AddEntry(ls);
+                    Kho ctdt = kho.FindByIDDungCu(MaDC);
+
+                    CTDonThuoc DonThuoc = new CTDonThuoc()
+                    {
+                        IDDonThuoc = txtMaThuoc.Text,
+                        TenThuoc = kh.TenDungCu,
+                        SoLuong = sl,
+                        ThanhGia = sl * kh.ThiTruong.DonGia
+                    };
+
+                    CTDT.AddDonThuoc(DonThuoc);
                 }
  
             }

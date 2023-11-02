@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="BenhNhanService.cs" />
     <Compile Include="CanLamSangService.cs" />
+    <Compile Include="CTDTService.cs" />
     <Compile Include="DichVuService.cs" />
     <Compile Include="DieuTriService.cs" />
     <Compile Include="DSKhamService.cs" />
