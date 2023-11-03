@@ -120,6 +120,8 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.imageListTrangChu = new System.Windows.Forms.ImageList(this.components);
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnInHoaDon = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -140,6 +142,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -160,9 +163,8 @@
             // 
             // menustripNguoiDung
             // 
-            this.menustripNguoiDung.Image = global::FormLogin.Properties.Resources.picture_111;
             this.menustripNguoiDung.Name = "menustripNguoiDung";
-            this.menustripNguoiDung.Size = new System.Drawing.Size(125, 24);
+            this.menustripNguoiDung.Size = new System.Drawing.Size(105, 24);
             this.menustripNguoiDung.Text = "Người Dùng";
             this.menustripNguoiDung.Click += new System.EventHandler(this.menustripNguoiDung_Click);
             this.menustripNguoiDung.MouseEnter += new System.EventHandler(this.menustripNguoiDung_MouseEnter);
@@ -170,9 +172,8 @@
             // 
             // menustripTiepNhan
             // 
-            this.menustripTiepNhan.Image = global::FormLogin.Properties.Resources._1256652;
             this.menustripTiepNhan.Name = "menustripTiepNhan";
-            this.menustripTiepNhan.Size = new System.Drawing.Size(111, 24);
+            this.menustripTiepNhan.Size = new System.Drawing.Size(91, 24);
             this.menustripTiepNhan.Text = "Tiếp Nhận";
             this.menustripTiepNhan.Click += new System.EventHandler(this.khámBệnhToolStripMenuItem_Click);
             this.menustripTiepNhan.MouseEnter += new System.EventHandler(this.menustripTiepNhan_MouseEnter);
@@ -180,9 +181,8 @@
             // 
             // menustripKhamBenh
             // 
-            this.menustripKhamBenh.Image = global::FormLogin.Properties.Resources.istockphoto_1257190204_612x612;
             this.menustripKhamBenh.Name = "menustripKhamBenh";
-            this.menustripKhamBenh.Size = new System.Drawing.Size(118, 24);
+            this.menustripKhamBenh.Size = new System.Drawing.Size(98, 24);
             this.menustripKhamBenh.Text = "Khám Bệnh";
             this.menustripKhamBenh.Click += new System.EventHandler(this.menustripKhamBenh_Click);
             this.menustripKhamBenh.MouseEnter += new System.EventHandler(this.menustripKhamBenh_MouseEnter);
@@ -190,9 +190,8 @@
             // 
             // menustripThuoc
             // 
-            this.menustripThuoc.Image = global::FormLogin.Properties.Resources.istockphoto_913088320_612x612;
             this.menustripThuoc.Name = "menustripThuoc";
-            this.menustripThuoc.Size = new System.Drawing.Size(121, 24);
+            this.menustripThuoc.Size = new System.Drawing.Size(101, 24);
             this.menustripThuoc.Text = "Dược vật tư";
             this.menustripThuoc.Click += new System.EventHandler(this.menustripThuoc_Click);
             this.menustripThuoc.MouseEnter += new System.EventHandler(this.menustripThuoc_MouseEnter);
@@ -200,9 +199,8 @@
             // 
             // menustripThongKe
             // 
-            this.menustripThongKe.Image = global::FormLogin.Properties.Resources.graphs_37717_640;
             this.menustripThongKe.Name = "menustripThongKe";
-            this.menustripThongKe.Size = new System.Drawing.Size(106, 24);
+            this.menustripThongKe.Size = new System.Drawing.Size(86, 24);
             this.menustripThongKe.Text = "Thống Kê";
             this.menustripThongKe.Click += new System.EventHandler(this.menustripThongKe_Click);
             this.menustripThongKe.MouseEnter += new System.EventHandler(this.menustripThongKe_MouseEnter);
@@ -374,6 +372,7 @@
             // 
             this.tabTrangChu.Controls.Add(this.tabNguoiDung);
             this.tabTrangChu.Controls.Add(this.tabTiepNhan);
+            this.tabTrangChu.Controls.Add(this.tabPage1);
             this.tabTrangChu.Location = new System.Drawing.Point(3, 64);
             this.tabTrangChu.Name = "tabTrangChu";
             this.tabTrangChu.SelectedIndex = 0;
@@ -400,16 +399,16 @@
             this.groupBox2.Controls.Add(this.radioNhanVien);
             this.groupBox2.Controls.Add(this.radioBacSi);
             this.groupBox2.Controls.Add(this.btnSearch);
-            this.groupBox2.Location = new System.Drawing.Point(548, 11);
+            this.groupBox2.Location = new System.Drawing.Point(207, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(507, 62);
+            this.groupBox2.Size = new System.Drawing.Size(485, 77);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             // 
             // radioNhanVien
             // 
             this.radioNhanVien.AutoSize = true;
-            this.radioNhanVien.Location = new System.Drawing.Point(69, 29);
+            this.radioNhanVien.Location = new System.Drawing.Point(86, 34);
             this.radioNhanVien.Name = "radioNhanVien";
             this.radioNhanVien.Size = new System.Drawing.Size(112, 20);
             this.radioNhanVien.TabIndex = 6;
@@ -420,7 +419,7 @@
             // radioBacSi
             // 
             this.radioBacSi.AutoSize = true;
-            this.radioBacSi.Location = new System.Drawing.Point(218, 29);
+            this.radioBacSi.Location = new System.Drawing.Point(224, 34);
             this.radioBacSi.Name = "radioBacSi";
             this.radioBacSi.Size = new System.Drawing.Size(92, 20);
             this.radioBacSi.TabIndex = 5;
@@ -430,7 +429,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(328, 19);
+            this.btnSearch.Location = new System.Drawing.Point(334, 26);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(146, 36);
             this.btnSearch.TabIndex = 1;
@@ -440,13 +439,16 @@
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(155, 36);
+            this.btnLoad.BackColor = System.Drawing.Color.Transparent;
+            this.btnLoad.Location = new System.Drawing.Point(74, 32);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(239, 37);
+            this.btnLoad.Size = new System.Drawing.Size(127, 37);
             this.btnLoad.TabIndex = 3;
             this.btnLoad.Text = "Tải thông tin";
-            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.UseVisualStyleBackColor = false;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.btnLoad.MouseEnter += new System.EventHandler(this.btnLoad_MouseEnter);
+            this.btnLoad.MouseLeave += new System.EventHandler(this.btnLoad_MouseLeave);
             // 
             // groupBox1
             // 
@@ -998,7 +1000,6 @@
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Image = global::FormLogin.Properties.Resources.pngtree_dental_clinic_logo_dental_logo_dental_cartoon_png_image_1915748;
             this.pictureBox5.Location = new System.Drawing.Point(1068, 91);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(139, 87);
@@ -1008,7 +1009,6 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Image = global::FormLogin.Properties.Resources.thiet_ke_logo;
             this.pictureBox4.Location = new System.Drawing.Point(327, 91);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(139, 87);
@@ -1018,7 +1018,6 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = global::FormLogin.Properties.Resources.DrAmeriWestpoint_0071_AuroraHDR2019_edit_Edit_scaled__1_1;
             this.pictureBox3.Location = new System.Drawing.Point(287, 203);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(960, 515);
@@ -1040,6 +1039,27 @@
             this.imageListTrangChu.Images.SetKeyName(5, "vertical-shot-female-dentist-working-her-clinic-treating-teeth-female-patient_118" +
         "628-3045.jpg");
             this.imageListTrangChu.Images.SetKeyName(6, "vertical-top-view-shot-female-dentist-working-with-patient_130388-2224.jpg");
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.btnInHoaDon);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1520, 625);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnInHoaDon
+            // 
+            this.btnInHoaDon.Location = new System.Drawing.Point(207, 104);
+            this.btnInHoaDon.Name = "btnInHoaDon";
+            this.btnInHoaDon.Size = new System.Drawing.Size(96, 44);
+            this.btnInHoaDon.TabIndex = 0;
+            this.btnInHoaDon.Text = "In hóa đơn";
+            this.btnInHoaDon.UseVisualStyleBackColor = true;
+            this.btnInHoaDon.Click += new System.EventHandler(this.btnInHoaDon_Click);
             // 
             // FormTrangChu
             // 
@@ -1093,6 +1113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1190,5 +1211,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.Button btnDangKi;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnInHoaDon;
     }
 }

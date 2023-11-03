@@ -317,6 +317,7 @@ namespace FormLogin
                             dgvBenhNhan.Rows[i].Visible = false;
                         }
                     }
+                    MessageBox.Show("Tìm kiếm bệnh nhân thành công");
                 }
             }
             catch (Exception ex)
@@ -550,6 +551,25 @@ namespace FormLogin
                 };
                 dangki.InsertUpdateDanhSachKham(c);
             }
+        }
+
+        private void btnLoad_MouseEnter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.LightSalmon;
+        }
+
+        private void btnLoad_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.Transparent;
+        }
+
+        private void btnInHoaDon_Click(object sender, EventArgs e)
+        {
+            RPViewHoaDon formRp = new RPViewHoaDon();
+            formRp.ShowDialog();
+  
         }
     }
 }
