@@ -32,7 +32,9 @@ namespace FormLogin
         private readonly VatTuService ms = new VatTuService();
         private readonly ThiTruongService thitruong = new ThiTruongService();
         private readonly HoaDonService hoadon = new HoaDonService();
-        
+        private readonly ThuocService thuoc = new ThuocService();
+        private readonly CTDTService CTDT = new CTDTService();
+
         public FormTrangChu()
         {
             InitializeComponent();
@@ -225,6 +227,7 @@ namespace FormLogin
                         DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
                         if (dr == DialogResult.Yes)
                         {
+                            canlamsang.DeleteAllWithID(txtIDBN.Text);
                             dskham.DeleteAllWithID(txtIDBN.Text);
                             benhnhan.Delete(txtIDBN.Text);
                             clearContentBN();
@@ -381,27 +384,25 @@ namespace FormLogin
             List<DanhSachKham> danhSachKhams = dskham.GetAllWithID(ID);
 
             if (danhSachKhams == null)
-                return "001";
+                return ID + "001";
             else
             {
-                int i = 1;
-                foreach (var item in danhSachKhams)
-                    i++;
+                int i = danhSachKhams.Count;
 
                 string stt = i.ToString();
 
                 if (i < 10)
-                    return stt.Insert(0, "00");
+                    return ID + stt.Insert(0, "00");
                 else if (i < 100)
-                    return stt.Insert(0, "0");
+                    return ID + stt.Insert(0, "0");
 
-                return stt;
+                return ID + stt;
             }
         }
 
         private void dgvBenhNhan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowCount = dgvBenhNhanDangKi.RowCount;
+            int rowCount = dgvBenhNhanDangKi.RowCount+1;
             string col = dgvBenhNhan.Columns[e.ColumnIndex].Name;
             if (col == "ColDKBN")
             {
@@ -501,7 +502,8 @@ namespace FormLogin
                 int index = dgvBenhNhanKham.Rows.Add();
                 dgvBenhNhanKham.Rows[index].Cells[0].Value = item.IDKham;
                 dgvBenhNhanKham.Rows[index].Cells[1].Value = item.NgayKham;
-                dgvBenhNhanKham.Rows[index].Cells[2].Value = item.BenhNhan.HoTen;
+                dgvBenhNhanKham.Rows[index].Cells["Column14"].Value = item.BenhNhan.IDBenhNhan;
+                dgvBenhNhanKham.Rows[index].Cells[3].Value = item.BenhNhan.HoTen;
             }
         }
 
@@ -539,57 +541,74 @@ namespace FormLogin
 
         private void dgvBenhNhanKham_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvBenhNhanKham.SelectedRows[0].Cells[0].Value != null)
-            {
-                DanhSachKham ds = dskham.TimTheoIDKham(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
-                if (ds.MaNV != null)
-                    cmbBacSi.SelectedValue = ds.MaNV;
-
-                CanLamSang cls = canlamsang.GetWithIDKham(ds.IDKham);
-                if (cls != null)
+            if (benhnhan.FindIDBenhNhan(txtIDBN.Text) != null)
+                if (dgvBenhNhanKham.SelectedRows[0].Cells[0].Value != null)
                 {
-                    txtHuyetAp.Text = cls.HuyetAp.ToString();
-                    txtMach.Text = cls.Mach.ToString();
-                    txtBaoHanh.Text = cls.BaoHanh;
-                    txtKhac.Text = cls.Khac;
-                    txtDuong.Text = cls.DuongHuyet;
+                    DanhSachKham ds = dskham.TimTheoIDKham(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
+                    if (ds.MaNV != null)
+                        cmbBacSi.SelectedValue = ds.MaNV;
+                    else
+                        cmbBacSi.SelectedIndex = 0;
 
-                    if (cls.MauKhoDong == true)
+                    CanLamSang cls = canlamsang.GetWithIDKham(ds.IDKham);
+                    if (cls != null)
+                    {
+                        txtHuyetAp.Text = cls.HuyetAp.ToString();
+                        txtMach.Text = cls.Mach.ToString();
+                        txtBaoHanh.Text = cls.BaoHanh;
+                        txtKhac.Text = cls.Khac;
+                        txtDuong.Text = cls.DuongHuyet;
+
+                        if (cls.MauKhoDong == true)
+                            rdoMauTS.Checked = true;
+                        else
+                            rdoMauTC.Checked = true;
+
+                        if (cls.BenhTim == true)
+                            rdoTimCo.Checked = true;
+                        else
+                            rdoTimKhong.Checked = true;
+
+                        if (cls.ThieuNang == true)
+                            rdoTNangCo.Checked = true;
+                        else
+                            rdoTNangKhong.Checked = true;
+                    }
+                    else
+                    {
+                        txtHuyetAp.Text = "";
+                        txtMach.Text = "";
+                        txtBaoHanh.Text = "";
+                        txtKhac.Text = "";
+                        txtDuong.Text = "";
                         rdoMauTS.Checked = true;
-                    else
-                        rdoMauTC.Checked = true;
-
-                    if (cls.BenhTim == true)
                         rdoTimCo.Checked = true;
-                    else
-                        rdoTimKhong.Checked = true;
-
-                    if (cls.ThieuNang == true)
                         rdoTNangCo.Checked = true;
-                    else
-                        rdoTNangKhong.Checked = true;
-                }
+                    }
 
-                List<DieuTri> dieuTris = dieutri.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
+                    List<DieuTri> dieuTris = dieutri.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
 
-                if (dieuTris != null)
-                {
-                    BindGridDieuTri();
-                    btnTaoDieuTri.Enabled = false;
+                    if (dieuTris != null)
+                    {
+                        BindGridDieuTri();
+                        btnTaoDieuTri.Enabled = false;
 
-                    foreach (var item in dieuTris)
-                        for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
-                        {
-                            if (dgvDieuTri.Rows[i].Cells[0].Value.ToString() == item.IDDichVu)
+                        foreach (var item in dieuTris)
+                            for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
                             {
-                                dgvDieuTri.Rows[i].Cells[4].Value = item.SoLuong;
-                                break;
+                                if (dgvDieuTri.Rows[i].Cells[0].Value.ToString() == item.IDDichVu)
+                                {
+                                    dgvDieuTri.Rows[i].Cells[4].Value = item.SoLuong;
+                                    break;
+                                }
                             }
-                        }
+                    }
+                    else
+                    {
+                        dgvDieuTri.Rows.Clear();
+                        btnTaoDieuTri.Enabled = true;
+                    }
                 }
-                else
-                    btnTaoDieuTri.Enabled = true;
-            }
         }
 
         private void BindGridDieuTri()
@@ -623,6 +642,7 @@ namespace FormLogin
 
             CanLamSang cls = new CanLamSang()
             {
+                IDBenhNhan = dgvBenhNhanKham.SelectedRows[0].Cells["Column14"].Value.ToString(),
                 IDKham = idkham,
                 BaoHanh = txtBaoHanh.Text,
                 BenhTim = rdoTimCo.Checked,
@@ -636,14 +656,12 @@ namespace FormLogin
 
             canlamsang.AddUpdate(cls);
 
-            List<DieuTri> dieuTris = dieutri.GetAllWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
             
-            if (dieuTris == null)
-            {
                 for (int i = 0; i < dgvDieuTri.Rows.Count; i++)
                 {
                     if (int.Parse(dgvDieuTri.Rows[i].Cells[4].Value.ToString()) > 0)
                     {
+                    string MaDC = dgvDieuTri.Rows[i].Cells[0].Value.ToString();
                         DieuTri dt = new DieuTri()
                         {
                             IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
@@ -674,8 +692,16 @@ namespace FormLogin
                         lichsu.AddEntry(ls);
                     }
                 }
-                MessageBox.Show("Lưu thông tin khám và thông tin điều trị thành công!");
-            }
+
+            HoaDon hd = new HoaDon()
+            {
+                IDHoaDon = SetIDHoaDon(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString()),
+                IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                TienThuoc = 0,
+                TienDieuTri = decimal.Parse(txtTongDieuTri.Text)
+            };
+            hoadon.AddUpdate(hd);
+
             MessageBox.Show("Lưu thông tin khám thành công!");
         }
 
@@ -873,13 +899,18 @@ namespace FormLogin
             dgvDoanhThu.Rows.Clear();
             foreach (var item in Bill)
             {
-                int index = dgvThongKeVT.Rows.Add();
+                int index = dgvDoanhThu.Rows.Add();
                 dgvDoanhThu.Rows[index].Cells[0].Value = item.IDHoaDon.ToString();
                 dgvDoanhThu.Rows[index].Cells[1].Value = item.DanhSachKham.BenhNhan.HoTen.ToString();
-                dgvDoanhThu.Rows[index].Cells[2].Value = item.PhuongThucThanhToan.ToString();
+                if (item.PhuongThucThanhToan != null)
+                    dgvDoanhThu.Rows[index].Cells[2].Value = item.PhuongThucThanhToan.ToString();
+                else
+                    dgvDoanhThu.Rows[index].Cells[2].Value = "";
                 dgvDoanhThu.Rows[index].Cells[3].Value = item.TongTien.ToString();
-                dgvDoanhThu.Rows[index].Cells[4].Value = item.NgayLap.ToString();
-
+                if (item.NgayLap != null)
+                    dgvDoanhThu.Rows[index].Cells[4].Value = item.NgayLap.ToString();
+                else
+                    dgvDoanhThu.Rows[index].Cells[4].Value = "";
             }
         }
 
@@ -1101,19 +1132,18 @@ namespace FormLogin
                         && dtpYearDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
                     {
 
-                        TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
+                        TienTong += decimal.Parse(dgvDoanhThu.Rows[i].Cells[3].Value.ToString());
                         txtTongDT.Text = TienTong.ToString();
                     }
                 }
                 else if (rdoYearDT.Checked)
                 {
-
-                    if (dtpYearDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
-                    {
-
-                        TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
-                        txtTongDT.Text = TienTong.ToString();
-                    }
+                    if (dgvDoanhThu.Rows[i].Cells[4].Value != "")
+                        if (dtpYearDT.Value.Year.ToString() == DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Year.ToString())
+                        {
+                            TienTong += decimal.Parse(dgvDoanhThu.Rows[i].Cells[3].Value.ToString());
+                            txtTongDT.Text = TienTong.ToString();
+                        }
                 }
                 else if (rdoQuiDT.Checked)
                 {
@@ -1124,7 +1154,7 @@ namespace FormLogin
                               (int.Parse(DateTime.Parse(dgvDoanhThu.Rows[i].Cells[4].Value.ToString()).Month.ToString()) - 1) / 3;
                         if (transactionQuarter == quy)
                         {
-                            TienTong += decimal.Parse(dgvThongKeVT.Rows[i].Cells[3].Value.ToString());
+                            TienTong += decimal.Parse(dgvDoanhThu.Rows[i].Cells[3].Value.ToString());
                             txtTongDT.Text = TienTong.ToString();
                             txtTongDT.Text = TienTong.ToString();
                         }
@@ -1157,6 +1187,200 @@ namespace FormLogin
 
                 FillRegistered(bacSis);
             }
+        }
+
+        private void btnLuuThuoc_Click(object sender, EventArgs e)
+        {
+            string idkham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+
+            DonThuoc dt = new DonThuoc()
+            {
+                IDDonThuoc = txtMaThuoc.Text,
+                IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                TongTien = int.Parse(txtTongThuoc.Text),
+                NgayLapDT = dtpDonThuoc.Value
+            };
+            thuoc.AddUpdate(dt);
+
+            for (int i = 0; i < dgvThuoc.Rows.Count; i++)
+            {
+                if (int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()) > 0)
+                {
+                    string MaDC = dgvThuoc.Rows[i].Cells[0].Value.ToString();
+                    
+                    int sl = int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString());
+                    kho.TruDungCu(int.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString()), MaDC);
+
+                    Kho kh = kho.FindByIDDungCu(MaDC);
+
+                    LichSuNhapXuat ls = new LichSuNhapXuat()
+                    {
+                        NoiDung = false,
+                        IDDungCu = kh.IDDungCu,
+                        TenDungCu = kh.TenDungCu,
+                        Loai = kh.Loai,
+                        DonViTinh = kh.DonViTinh,
+                        SoLuongNhapXuat = sl,
+                        Don = kh.ThiTruong.DonGia,
+                        ThanhTien = sl * kh.ThiTruong.DonGia,
+                        NgayNhap = dskham.TimTheoIDKham(idkham).NgayKham
+                    };
+
+                    lichsu.AddEntry(ls);
+                    Kho ctdt = kho.FindByIDDungCu(MaDC);
+
+                    CTDonThuoc DonThuoc = new CTDonThuoc()
+                    {
+                        IDDonThuoc = txtMaThuoc.Text,
+                        TenThuoc = kh.TenDungCu,
+                        SoLuong = sl,
+                        ThanhGia = sl * kh.ThiTruong.DonGia
+                    };
+
+                    CTDT.AddDonThuoc(DonThuoc);
+                }
+            }
+
+
+            HoaDon hd = new HoaDon()
+            {
+                IDHoaDon = SetIDHoaDon(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString()),
+                IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                TienThuoc = dt.TongTien,
+                TienDieuTri = 0
+            };
+            hoadon.AddUpdate(hd);
+
+            MessageBox.Show("Lưu thông tin thuốc thành công!");
+        }
+
+        private string SetIDHoaDon(string id)
+        {
+            if (hoadon.GetWithID(id) == null)
+            {
+                List<HoaDon> listhd = hoadon.GetAll();
+
+                if (listhd == null)
+                    return "001";
+                else
+                {
+                    int i = listhd.Count + 1;
+
+                    string idhd = i.ToString();
+
+                    if (i < 10)
+                        return idhd.Insert(0, "00");
+                    else if (i < 100)
+                        return idhd.Insert(0, "0");
+
+                    return idhd;
+                }
+            }
+            else
+                return hoadon.GetWithID(id).IDHoaDon;
+        }
+
+        private void BindGridThuoc()
+        {
+            string name = "Thuốc";
+            List<Kho> thuocs = thuoc.GetAllMedicine(name);
+            dgvThuoc.Rows.Clear();
+
+            foreach (var item in thuocs)
+            {
+                int index = dgvThuoc.Rows.Add();
+
+                dgvThuoc.Rows[index].Cells[0].Value = item.IDDungCu;
+                dgvThuoc.Rows[index].Cells[1].Value = item.TenDungCu;
+                dgvThuoc.Rows[index].Cells[2].Value = item.DonViTinh;
+                dgvThuoc.Rows[index].Cells[3].Value = item.ThiTruong.DonGia.ToString();
+                dgvThuoc.Rows[index].Cells[4].Value = "0";
+                dgvThuoc.Rows[index].Cells[5].Value = "0";
+            }
+        }
+        private void btnKe_Click(object sender, EventArgs e)
+        {
+            BindGridThuoc();
+        }
+
+        private void dgvThuoc_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                float sum = 0;
+
+                for (int i = 0; i < dgvThuoc.Rows.Count; i++)
+                {
+                    if (dgvThuoc.Rows[i].Cells[5].Value != null)
+                    {
+                        dgvThuoc.Rows[i].Cells[5].Value =
+                            (float.Parse(dgvThuoc.Rows[i].Cells[3].Value.ToString())
+                            * float.Parse(dgvThuoc.Rows[i].Cells[4].Value.ToString())).ToString();
+
+                        sum += float.Parse(dgvThuoc.Rows[i].Cells[5].Value.ToString());
+                    }
+                }
+
+                txtTongThuoc.Text = sum.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tabThuoc_Enter(object sender, EventArgs e)
+        {
+            dtpDonThuoc.CustomFormat = "dd/MM/yyyy";
+            dtpDonThuoc.Format = DateTimePickerFormat.Custom;
+            txtMaBNThuoc.Text = dgvBenhNhanKham.SelectedRows[0].Cells["Column14"].Value.ToString();
+        }
+
+        private void tabHoaDon_Enter(object sender, EventArgs e)
+        {
+            HoaDon hd = hoadon.GetWithID(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString());
+            BenhNhan bn = benhnhan.FindNameBenhNhan(dgvBenhNhanKham.SelectedRows[0].Cells["ColHoTen"].Value.ToString());
+
+            if (hd != null)
+            {
+                txtHDHoTen.Text = bn.HoTen;
+
+                if (bn.Gioi == true)
+                    txtHDGioi.Text = "Nam";
+                else
+                    txtHDGioi.Text = "Nữ";
+
+                txtHDNamSinh.Text = bn.NamSinh;
+                txtHDSDT.Text = bn.SDT;
+                txtHDIDBN.Text = bn.IDBenhNhan;
+                txtHDDiaChi.Text = bn.DiaChi;
+
+                if (hd.PhuongThucThanhToan != null)
+                    cboThanhToan.Text = hd.PhuongThucThanhToan;
+
+                txtHDTienThuoc.Text = hd.TienThuoc.ToString();
+                txtHDTienDichVu.Text = hd.TienDieuTri.ToString();
+                txtHDTongTien.Text = hd.TongTien.ToString();
+
+                if (hd.NgayLap != null)
+                    dtpHDNgayLap.Value = Convert.ToDateTime(hd.NgayLap);
+            }
+        }
+
+        private void btnLuuHD_Click(object sender, EventArgs e)
+        {
+            HoaDon hd = new HoaDon()
+            {
+                IDHoaDon = SetIDHoaDon(dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString()),
+                IDKham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString(),
+                PhuongThucThanhToan = cboThanhToan.Text,
+                TienThuoc = decimal.Parse(txtHDTienThuoc.Text),
+                TienDieuTri = decimal.Parse(txtHDTienDichVu.Text),
+                NgayLap = dtpHDNgayLap.Value
+            };
+            hoadon.AddUpdate(hd);
+
+            MessageBox.Show("Lưu hóa đơn thành công");
         }
     }
 }

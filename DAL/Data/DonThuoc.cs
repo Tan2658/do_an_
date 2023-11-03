@@ -19,8 +19,7 @@ namespace DAL.Data
         [StringLength(3)]
         public string IDDonThuoc { get; set; }
 
-        [Required]
-        [StringLength(3)]
+        [StringLength(6)]
         public string IDKham { get; set; }
 
         [Column(TypeName = "money")]

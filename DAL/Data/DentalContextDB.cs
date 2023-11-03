@@ -58,6 +58,11 @@ namespace DAL.Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<BenhNhan>()
+                .HasMany(e => e.CanLamSang)
+                .WithRequired(e => e.BenhNhan)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BenhNhan>()
                 .HasMany(e => e.DanhSachKham)
                 .WithRequired(e => e.BenhNhan)
                 .WillCascadeOnDelete(false);
@@ -89,21 +94,6 @@ namespace DAL.Data
 
             modelBuilder.Entity<DanhSachKham>()
                 .HasMany(e => e.CanLamSang)
-                .WithRequired(e => e.DanhSachKham)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<DanhSachKham>()
-                .HasMany(e => e.DieuTri)
-                .WithRequired(e => e.DanhSachKham)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<DanhSachKham>()
-                .HasMany(e => e.DonThuoc)
-                .WithRequired(e => e.DanhSachKham)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<DanhSachKham>()
-                .HasMany(e => e.HoaDon)
                 .WithRequired(e => e.DanhSachKham)
                 .WillCascadeOnDelete(false);
 
@@ -167,10 +157,6 @@ namespace DAL.Data
                 .Property(e => e.TongTien)
                 .HasPrecision(19, 4);
 
-            modelBuilder.Entity<HoaDon>()
-                .Property(e => e.NgayLap)
-                .HasPrecision(19, 4);
-
             modelBuilder.Entity<Kho>()
                 .Property(e => e.IDSanPham)
                 .IsFixedLength()
@@ -217,6 +203,11 @@ namespace DAL.Data
                 .HasMany(e => e.Kho)
                 .WithRequired(e => e.ThiTruong)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CanLamSang>()
+                .Property(e => e.IDBenhNhan)
+                .IsFixedLength()
+                .IsUnicode(false);
 
             modelBuilder.Entity<CanLamSang>()
                 .Property(e => e.IDKham)

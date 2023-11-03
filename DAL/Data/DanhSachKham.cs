@@ -19,7 +19,7 @@ namespace DAL.Data
         }
 
         [Key]
-        [StringLength(3)]
+        [StringLength(6)]
         public string IDKham { get; set; }
 
         [Required]

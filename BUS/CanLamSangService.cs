@@ -38,5 +38,23 @@ namespace BUS
                 context.SaveChanges();
             }
         }
+
+        public void DeleteAllWithID(string id)
+        {
+            DentalContextDB context = new DentalContextDB();
+            int flag = 1;
+            do
+            {
+                CanLamSang ds = context.CanLamSang.FirstOrDefault(q => q.IDBenhNhan == id);
+
+                if (ds != null)
+                {
+                    context.CanLamSang.Remove(ds);
+                    context.SaveChanges();
+                }
+                else
+                    flag = -1;
+            } while (flag != -1);
+        }
     }
 }

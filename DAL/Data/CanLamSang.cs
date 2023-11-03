@@ -12,6 +12,11 @@ namespace DAL.Data
         [Key]
         [Column(Order = 0)]
         [StringLength(3)]
+        public string IDBenhNhan { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        [StringLength(6)]
         public string IDKham { get; set; }
 
         public int? HuyetAp { get; set; }
@@ -22,15 +27,15 @@ namespace DAL.Data
         public string DuongHuyet { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 2)]
         public bool MauKhoDong { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 3)]
         public bool BenhTim { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 4)]
         public bool ThieuNang { get; set; }
 
         [StringLength(255)]
@@ -38,6 +43,8 @@ namespace DAL.Data
 
         [StringLength(255)]
         public string Khac { get; set; }
+
+        public virtual BenhNhan BenhNhan { get; set; }
 
         public virtual DanhSachKham DanhSachKham { get; set; }
     }

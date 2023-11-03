@@ -14,23 +14,21 @@ namespace DAL.Data
         [StringLength(4)]
         public string IDDichVu { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [StringLength(3)]
+        [StringLength(6)]
         public string IDKham { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         [StringLength(4)]
         public string IDDungCu { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SoLuong { get; set; }
 
         [Key]
-        [Column(Order = 4, TypeName = "money")]
+        [Column(Order = 3, TypeName = "money")]
         public decimal ThanhTien { get; set; }
 
         public virtual DanhSachKham DanhSachKham { get; set; }

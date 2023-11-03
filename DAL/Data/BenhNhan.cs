@@ -12,6 +12,7 @@ namespace DAL.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BenhNhan()
         {
+            CanLamSang = new HashSet<CanLamSang>();
             DanhSachKham = new HashSet<DanhSachKham>();
         }
 
@@ -35,6 +36,9 @@ namespace DAL.Data
         public string DiaChi { get; set; }
 
         public DateTime? NgayKhamDau { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CanLamSang> CanLamSang { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhSachKham> DanhSachKham { get; set; }

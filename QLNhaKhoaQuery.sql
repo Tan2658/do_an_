@@ -173,7 +173,7 @@ if exists (select * from sys.objects where name ='DanhSachKham')
 go
 create table DanhSachKham
 (
-	IDKham char(3) not null,
+	IDKham char(6) not null,
 	IDBenhNhan char(3) not null,
 	MaNV char(3),
 	NgayKham datetime not null,
@@ -187,7 +187,8 @@ if exists (select * from sys.objects where name ='CanLamSang')
 go
 create table CanLamSang
 (
-	IDKham char(3) not null,
+	IDBenhNhan char(3) not null,
+	IDKham char(6) not null,
 	HuyetAp int,
 	Mach int,
 	DuongHuyet nvarchar(255),
@@ -196,6 +197,7 @@ create table CanLamSang
 	ThieuNang bit not null,
 	BaoHanh nvarchar(255),
 	Khac nvarchar(255),
+	constraint chk_IDBenhNhan_CanLamSang foreign key (IDBenhNhan) references BenhNhan(IDBenhNhan),
 	constraint chk_IDKham_CanLamSang foreign key (IDKham) references DanhSachKham(IDKham)
 )
 
@@ -287,7 +289,7 @@ go
 create table DieuTri
 (
 	IDDichVu char(4) not null,
-	IDKham char(3) not null,
+	IDKham char(6),
 	IDDungCu char(4) not null,
 	SoLuong int not null,
 	ThanhTien money not null,
@@ -302,7 +304,7 @@ go
 create table DonThuoc
 (
 	IDDonThuoc char(3) not null,
-	IDKham char(3) not null,
+	IDKham char(6),
 	TongTien money not null,
 	NgayLapDT datetime,
 	primary key (IDDonThuoc),
@@ -327,12 +329,12 @@ go
 create table HoaDon
 (
 	IDHoaDon char(3) not null,
-	IDKham char(3) not null,
+	IDKham char(6),
 	PhuongThucThanhToan nvarchar(255),
 	TienThuoc money not null,
 	TienDieuTri money not null,
 	TongTien money not null,
-	NgayLap money not null,
+	NgayLap datetime,
 	primary key (IDHoaDon),
 	constraint chk_IDKham_HoaDon foreign key (IDKham) references DanhSachKham(IDKham)
 )

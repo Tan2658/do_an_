@@ -13,8 +13,7 @@ namespace DAL.Data
         [StringLength(3)]
         public string IDHoaDon { get; set; }
 
-        [Required]
-        [StringLength(3)]
+        [StringLength(6)]
         public string IDKham { get; set; }
 
         [StringLength(255)]
@@ -29,8 +28,7 @@ namespace DAL.Data
         [Column(TypeName = "money")]
         public decimal TongTien { get; set; }
 
-        [Column(TypeName = "money")]
-        public decimal NgayLap { get; set; }
+        public DateTime? NgayLap { get; set; }
 
         public virtual DanhSachKham DanhSachKham { get; set; }
     }
