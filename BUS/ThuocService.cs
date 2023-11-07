@@ -41,5 +41,11 @@ namespace BUS
             DentalContextDB context = new DentalContextDB();
             return context.DonThuoc.Where(q => q.IDKham == id).ToList();
         }
+
+        public List<DonThuoc> GetDonThuoc()
+        {
+            DentalContextDB context = new DentalContextDB();
+            return context.DonThuoc.ToList();
+        }
     }
 }

@@ -213,38 +213,38 @@ namespace FormLogin
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (txtIDBN.Text == "")
-                    throw new Exception("Vui lòng nhập mã của bệnh nhân cần xóa");
+            //try
+            //{
+            //    if (txtIDBN.Text == "")
+            //        throw new Exception("Vui lòng nhập mã của bệnh nhân cần xóa");
 
-                int flag = -1;
+            //    int flag = -1;
 
-                for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
-                {
-                    if (dgvBenhNhan.Rows[i].Cells[0].Value.ToString() == txtIDBN.Text)
-                    {
-                        DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
-                        if (dr == DialogResult.Yes)
-                        {
-                            canlamsang.DeleteAllWithID(txtIDBN.Text);
-                            dskham.DeleteAllWithID(txtIDBN.Text);
-                            benhnhan.Delete(txtIDBN.Text);
-                            clearContentBN();
-                            MessageBox.Show("Xóa bệnh nhân thành công", "Thông báo", MessageBoxButtons.OK);
-                        }
-                        flag = 1;
-                        break;
-                    }
-                }
+            //    for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+            //    {
+            //        if (dgvBenhNhan.Rows[i].Cells[0].Value.ToString() == txtIDBN.Text)
+            //        {
+            //            DialogResult dr = MessageBox.Show("Bạn có muốn xóa ?", "Yes / No", MessageBoxButtons.YesNo);
+            //            if (dr == DialogResult.Yes)
+            //            {
+            //                canlamsang.DeleteAllWithID(txtIDBN.Text);
+            //                dskham.DeleteAllWithID(txtIDBN.Text);
+            //                benhnhan.Delete(txtIDBN.Text);
+            //                clearContentBN();
+            //                MessageBox.Show("Xóa bệnh nhân thành công", "Thông báo", MessageBoxButtons.OK);
+            //            }
+            //            flag = 1;
+            //            break;
+            //        }
+            //    }
 
-                if (flag == -1)
-                    throw new Exception("Không tìm thấy bệnh nhân");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    if (flag == -1)
+            //        throw new Exception("Không tìm thấy bệnh nhân");
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private string RemoveDiacritics(string text)
@@ -266,7 +266,76 @@ namespace FormLogin
 
         private void btnTim_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dgvBenhNhan.Rows.Count; i++)
+            {
+                if (txtIDBN.Text != "")
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[0].Value.ToString() == txtIDBN.Text)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
 
+                if (txtNameBN.Text != "")
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[1].Value.ToString() == txtNameBN.Text)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
+
+                if (radioMale.Checked != false || radioFemale.Checked != false)
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[2].Value.ToString() == "Nam" && radioMale.Checked == true)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else if (dgvBenhNhan.Rows[i].Cells[2].Value.ToString() == "Nữ" && radioFemale.Checked == true)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
+
+                if (txtNamSinhBN.Text != "")
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[3].Value.ToString() == txtNamSinhBN.Text)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
+
+                if (txtSDTBN.Text != "")
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[4].Value.ToString() == txtSDTBN.Text)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
+
+                if (txtDiaChiBN.Text != "")
+                {
+                    if (dgvBenhNhan.Rows[i].Cells[5].Value.ToString() == txtDiaChiBN.Text)
+                        dgvBenhNhan.Rows[i].Visible = true;
+                    else
+                    {
+                        dgvBenhNhan.Rows[i].Visible = false;
+                        continue;
+                    }
+                }
+            }
         }
         private bool checkDataFields()
         {
@@ -1189,9 +1258,26 @@ namespace FormLogin
             }
         }
 
+        public string SetIDDonThuoc()
+        {
+            List<DonThuoc> donThuocs = thuoc.GetDonThuoc();
+
+            if (donThuocs == null)
+                return "001";
+
+            if (donThuocs.Count < 9)
+                return (donThuocs.Count+1).ToString().Insert(0, "00");
+            else if (donThuocs.Count < 99)
+                return (donThuocs.Count + 1).ToString().Insert(0, "0");
+
+            return (donThuocs.Count + 1).ToString();
+        }
+
         private void btnLuuThuoc_Click(object sender, EventArgs e)
         {
             string idkham = dgvBenhNhanKham.SelectedRows[0].Cells[0].Value.ToString();
+
+            txtMaThuoc.Text = SetIDDonThuoc();
 
             DonThuoc dt = new DonThuoc()
             {
@@ -1381,6 +1467,29 @@ namespace FormLogin
             hoadon.AddUpdate(hd);
 
             MessageBox.Show("Lưu hóa đơn thành công");
+        }
+
+        private void btnInHD_Click(object sender, EventArgs e)
+        {
+            HoaDonReportInfo SendingHDInfo = new HoaDonReportInfo()
+            {
+                HDHoTen = txtHDHoTen.Text,
+                HDGioi = txtHDGioi.Text,
+                HDNamSinh = txtHDNamSinh.Text,
+                HDSDT = txtHDSDT.Text,
+                HDMaBenhNhan = txtHDIDBN.Text,
+                HDDiaChi = txtHDDiaChi.Text,
+                HDDichVuThanhToan = cboThanhToan.Text,
+                HDTienThuoc = txtHDTienThuoc.Text,
+                HDTienDichVu = txtHDTienDichVu.Text,
+                HDTienTong = txtHDTongTien.Text,
+                HDNgayLap = dtpHDNgayLap.Value,
+            };
+
+            RPViewHoaDon form = new RPViewHoaDon(SendingHDInfo);
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
     }
 }

@@ -22,9 +22,17 @@ namespace BUS
             }
             else
             {
-                db.SoLuong = cls.SoLuong;
-                db.ThanhGia = cls.ThanhGia;
-                context.SaveChanges();
+                if (db.IDDonThuoc != cls.IDDonThuoc)
+                {
+                    context.CTDonThuoc.Add(cls);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    db.SoLuong = cls.SoLuong;
+                    db.ThanhGia = cls.ThanhGia;
+                    context.SaveChanges();
+                }
             }
         }
     }

@@ -57,6 +57,7 @@
     <Compile Include="DichVuService.cs" />
     <Compile Include="DieuTriService.cs" />
     <Compile Include="DSKhamService.cs" />
+    <Compile Include="HoaDonReportInfo.cs" />
     <Compile Include="HoaDonService.cs" />
     <Compile Include="KhoService.cs" />
     <Compile Include="LichSuService.cs" />
